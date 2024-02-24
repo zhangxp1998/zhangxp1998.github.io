@@ -288,6 +288,7 @@ for (let i = 0; i < t.length; i++) {
 let submit_btn = document.createElement("input");
 submit_btn.type = "submit";
 submit_btn.innerHTML = "submit";
+submit_btn.style.width = "100%";
 form.appendChild(submit_btn);
 document.body.appendChild(form);
 let result = document.createElement("div");
