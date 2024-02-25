@@ -1,4 +1,4 @@
-var t = [
+const questions = [
   {
     title: "性别",
     options: [
@@ -272,8 +272,8 @@ const character_order = [
 ];
 let form = document.createElement("form");
 
-for (let i = 0; i < t.length; i++) {
-  let question = t[i];
+for (let i = 0; i < questions.length; i++) {
+  let question = questions[i];
   let title_elem = document.createElement("p");
   title_elem.innerHTML = i + 1 + ". " + question.title;
   let field_set = document.createElement("fieldset");
@@ -287,12 +287,12 @@ for (let i = 0; i < t.length; i++) {
     input_elem.value = j;
     input_elem.type = "radio";
     let label_elem = document.createElement("label");
-    let desc = "";
-    for (let k = 0; k < character_order.length; k++) {
-      desc +=
-        " " + character_order[k].substring(0, 2) + ": " + config[j][k][i + 1];
-    }
-    label_elem.innerHTML = option.option + desc;
+    // let desc = "";
+    // for (let k = 0; k < character_order.length; k++) {
+    //   desc +=
+    //     " " + character_order[k].substring(0, 2) + ": " + config[j][k][i + 1];
+    // }
+    label_elem.innerHTML = option.option;
     field_set.appendChild(div);
     div.appendChild(input_elem);
     div.appendChild(label_elem);
