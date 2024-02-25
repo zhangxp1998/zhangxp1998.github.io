@@ -262,6 +262,14 @@ let config = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ],
 ];
+const character_order = [
+  "绯红喜服男子",
+  "鹅黄褂子男子",
+  "月白长衫男子",
+  "紫色儒裙女子",
+  "玄色锦袍男子",
+  "竹青短打男子",
+];
 let form = document.createElement("form");
 
 for (let i = 0; i < t.length; i++) {
@@ -279,7 +287,12 @@ for (let i = 0; i < t.length; i++) {
     input_elem.value = j;
     input_elem.type = "radio";
     let label_elem = document.createElement("label");
-    label_elem.innerHTML = option.option;
+    let desc = "";
+    for (let k = 0; k < character_order.length; k++) {
+      desc +=
+        " " + character_order[k].substring(0, 2) + ": " + config[j][k][i + 1];
+    }
+    label_elem.innerHTML = option.option + desc;
     field_set.appendChild(div);
     div.appendChild(input_elem);
     div.appendChild(label_elem);
@@ -295,14 +308,6 @@ let result = document.createElement("div");
 document.body.appendChild(result);
 
 function renderResult(score) {
-  const character_order = [
-    "绯红喜服男子",
-    "鹅黄褂子男子",
-    "月白长衫男子",
-    "紫色儒裙女子",
-    "玄色锦袍男子",
-    "竹青短打男子",
-  ];
   let entries = [];
   for (let i = 0; i < character_order.length; i++) {
     entries.push([character_order[i], score[i]]);
