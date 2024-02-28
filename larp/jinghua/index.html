@@ -330,7 +330,12 @@
 </head>
 
 <body>
-  <div id="app" v-scope="App({})">
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+  <div v-cloak id="app" v-scope="App({})">
     <form v-on:submit="formSubmit">
       <fieldset v-for="({ title, options }, i) in questions">
         <p>{{ i + 1 }}. {{ title }}</p>
