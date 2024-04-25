@@ -233,6 +233,7 @@
 }
 
 .drama-tickets .final .poster .content {
+    font-family: 'sf-pro';
     background-color: #fff;
     border-radius: 5px;
     padding: 10px;
@@ -330,7 +331,18 @@
     height: 54px
 }
 
+@font-face {
+    font-family: 'zhuanshu';
+    src: url('zhuanshu.ttf');
+}
+
+@font-face {
+    font-family: 'sf-pro';
+    src: url('SF-Pro-Display-Light.otf');
+}
+
 .drama-tickets .final .poster .content .footer .slogan {
+    font-family: 'zhuanshu';
     padding-top: 25px;
     font-size: 12px;
     color: #888;
