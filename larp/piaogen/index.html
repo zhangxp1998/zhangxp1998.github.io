@@ -5,13 +5,14 @@
     <script src="data.js"></script>
   </head>
   <body>
+    <select name="characters" id="preset"></select>
     <div class="drama-tickets">
       <div id="canvas" class="final">
         <div class="poster" style="background-color: rgb(166, 137, 102)">
           <img src="jinghua.jpg" class="big-cover" />
           <div class="content">
             <div class="header">
-              <img src="紫色.jpg" class="small-cover" />
+              <img src="紫色.jpg" class="small-cover" id="small-cover" />
               <div class="drama-name" id="drama-name">惊华</div>
               <div class="shop-name" id="shop-name"></div>
               <div class="time" id="time">04/27/2024</div>
@@ -38,13 +39,10 @@
                 <div class="subtitle">DM</div>
                 <div class="value" id="dm">💻</div>
               </div>
-              <img
-                src="出票.png"
-                class="stamp"
-              />
+              <img src="出票.png" class="stamp" />
             </div>
             <div class="footer">
-              <img src="吃雪.gif" class="qrcode-img" />
+              <img src="吃雪.gif" class="qrcode-img" id="qrcode-img" />
               <div class="slogan" id="slogan">
                 <span style="font-weight: bold">千岛剧本杀</span><br />
                 剧本杀兴趣社区与拼车平台

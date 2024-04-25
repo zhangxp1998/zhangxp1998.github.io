@@ -344,11 +344,11 @@
 .drama-tickets .final .poster .content .footer .slogan {
     font-family: 'zhuanshu';
     padding-top: 25px;
-    font-size: 14px;
+    font-size: 13px;
     color: #888;
     transform: scale(.8);
-    display: inline-block;
-    margin-left: -12px
+    /* display: inline-block; */
+    margin-left: -26px
 }
 
 .drama-tickets .final .poster .content .footer .avatar {
