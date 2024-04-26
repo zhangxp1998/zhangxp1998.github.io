@@ -3,9 +3,11 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <link rel="stylesheet" href="drama.css" />
     <script src="data.js"></script>
+    <script src=https://html2canvas.hertzen.com/dist/html2canvas.min.js async onload="document.getElementById('download').disabled = false";></script>
   </head>
   <body>
     <select name="characters" id="preset"></select>
+    <button id="download" disabled onclick="download(event)">Download</button>
     <div class="drama-tickets">
       <div id="canvas" class="final">
         <div class="poster" style="background-color: rgb(166, 137, 102)">

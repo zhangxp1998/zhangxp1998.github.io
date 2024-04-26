@@ -63,3 +63,13 @@ window.onload = function () {
   preset.onchange = onDropDownChange;
   selectCharacter(0);
 };
+
+function download() {
+  html2canvas(document.getElementById("canvas")).then((canvas) => {
+    let blob = canvas.toDataURL("image/png");
+    let link = document.createElement("a");
+    link.download = "票根.png";
+    link.href = blob;
+    link.click();
+  });
+}
