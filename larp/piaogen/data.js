@@ -65,7 +65,12 @@ window.onload = function () {
 };
 
 function download() {
-  html2canvas(document.getElementById("canvas")).then((canvas) => {
+  html2canvas(document.getElementById("canvas"), {
+    allowTaint: false,
+    useCORS: true,
+    backgroundColor: "white",
+    scale: 3,
+  }).then((canvas) => {
     let blob = canvas.toDataURL("image/png");
     let link = document.createElement("a");
     link.download = "票根.png";
