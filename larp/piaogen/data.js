@@ -64,6 +64,12 @@ window.onload = function () {
   selectCharacter(0);
 };
 
+function getFilename() {
+  const character = document.getElementById("character").innerText;
+  const time = document.getElementById("time").innerText;
+  return time.substring(0, 5) + " " + character.substring(0, 2);
+}
+
 function download() {
   html2canvas(document.getElementById("canvas"), {
     allowTaint: false,
@@ -73,7 +79,7 @@ function download() {
   }).then((canvas) => {
     let blob = canvas.toDataURL("image/png");
     let link = document.createElement("a");
-    link.download = "票根.png";
+    link.download = getFilename() + ".png";
     link.href = blob;
     link.click();
   });
