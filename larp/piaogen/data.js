@@ -84,3 +84,7 @@ function download() {
     link.click();
   });
 }
+
+function changeLogo(event) {
+  document.getElementById("qrcode-img").src = event.target.value;
+}

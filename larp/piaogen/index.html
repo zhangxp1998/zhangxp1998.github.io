@@ -13,6 +13,13 @@
   <body>
     <select name="characters" id="preset"></select>
     <button id="download" disabled onclick="download(event)">Download</button>
+    <select name="logo" onchange="changeLogo(event)">
+      <option value="吃雪.gif">吃雪</option>
+      <option value="战斗准备.gif">战斗准备</option>
+      <option value="现身.gif">现身</option>
+      <option value="难以置信.gif">难以置信</option>
+      <option value="qrcode.png">千岛二维码</option>
+    </select>
     <div class="drama-tickets">
       <div id="canvas" class="final">
         <div class="poster" style="background-color: rgb(166, 137, 102)">
