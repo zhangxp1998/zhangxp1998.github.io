@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d2254ce"],{e48a:function(e,n,c){"use strict";c.r(n);var u=function(){var e=this,n=e._self._c;return n("router-view")},t=[],a={name:"EmblemEngage"},l=a,r=c("0c7c"),o=Object(r["a"])(l,u,t,!1,null,null,null);n["default"]=o.exports}}]);

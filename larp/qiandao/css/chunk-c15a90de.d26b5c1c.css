@@ -1,0 +1,588 @@
+.drama-tickets {
+  background-color: #ccedf2;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.drama-tickets .machine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  overflow: hidden;
+  transition: 0.3s;
+}
+
+.drama-tickets .machine .front {
+  background: linear-gradient(180deg, #91c2d0, #5d8f9b);
+  width: calc(100% - 40px);
+  margin: -15px auto 0;
+  height: 57%;
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.drama-tickets .machine .front:before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  height: 100%;
+  border: 1px solid #182b33;
+  border-top: none;
+  border-bottom: none;
+}
+
+.drama-tickets .machine .front .front-top {
+  position: absolute;
+  width: 100%;
+  padding-top: 33.5%;
+  background-size: 100%;
+  top: 1px;
+  transform: translateY(-100%);
+}
+
+.drama-tickets .machine .front .front-top:before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  margin-top: -12%;
+  padding-top: 12.5%;
+  border: 1px solid #182b33;
+  border-bottom: none;
+  border-radius: 15px 15px 0 0;
+}
+
+.drama-tickets .machine .front .front-bottom {
+  position: absolute;
+  width: 100%;
+  padding-top: 33%;
+  background-image: url(https://cdn.qiandaoapp.com/interior/images/af9aa64dcd530181d47b307b2b92b54c.png);
+  background-size: 100%;
+  bottom: 1px;
+  transform: translateY(100%);
+}
+
+.drama-tickets .machine .front .front-bottom:before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 0;
+  margin-bottom: -3%;
+  padding-bottom: 3%;
+  border: 1px solid #182b33;
+  border-top: none;
+  border-radius: 0 0 15px 15px;
+}
+
+.drama-tickets .machine .front .front-bottom:after {
+  content: "";
+  position: absolute;
+  height: 30px;
+  width: 190%;
+  left: 50%;
+  margin-top: -15px;
+  transform: translateX(-50%);
+  background: radial-gradient(rgba(0, 0, 0, 0.6), transparent, transparent);
+  border-radius: 100%;
+}
+
+.drama-tickets .machine .screen {
+  background-color: #73706d;
+  border: 3px solid #233b40;
+  border-radius: 15px;
+  position: relative;
+  height: 100%;
+  margin: -4% 30px 0;
+  z-index: 1;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6),
+    inset 0 12px 10px 2px rgba(0, 0, 0, 0.4);
+}
+
+.drama-tickets .machine .screen:before {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 38px;
+  border-radius: 10px 10px 0 0;
+  background: linear-gradient(0deg, transparent, rgba(0, 0, 0, 0.2));
+}
+
+.drama-tickets .machine .screen:after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 38px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: inset 0 -12px 0 2px grey;
+}
+
+.drama-tickets .machine .screen .body {
+  overflow-y: scroll;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  border-radius: 10px;
+  padding: 20px 10px;
+  transition: 0.2s;
+}
+
+.drama-tickets .machine .screen .body .drama {
+  width: 100%;
+  height: 70px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: #fff;
+  opacity: 0.9;
+}
+
+.drama-tickets .machine .screen .body .drama img {
+  border-radius: 4px;
+  margin-right: 10px;
+  float: left;
+  height: 50px;
+}
+
+.drama-tickets .machine .screen .body .drama .drama-name {
+  margin-top: 17px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drama-tickets .machine .screen .body .form .cell {
+  margin-bottom: 10px;
+}
+
+.drama-tickets .machine .screen .body .form .cell .form-title {
+  display: inline-block;
+  width: 50px;
+  color: #fff;
+}
+
+.drama-tickets .machine .screen .body .form .cell .form-input {
+  width: calc(100% - 50px);
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: none;
+  opacity: 0.9;
+}
+
+.drama-tickets .loading {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.drama-tickets .loading:before {
+  content: "出票中..";
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  margin-left: -21px;
+  color: #fff;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.drama-tickets .loading:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.drama-tickets .final {
+  margin: 0 auto;
+  width: 17.75em;
+  font-size: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.drama-tickets .final .draw {
+  width: 100%;
+}
+
+.drama-tickets .final .poster {
+  padding: 5px;
+}
+
+.drama-tickets .final .poster .big-cover {
+  width: 100%;
+}
+
+.drama-tickets .final .poster .content {
+  font-family: "sf-pro";
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 3px;
+  position: relative;
+  text-align: left;
+  color: #333;
+}
+
+.drama-tickets .final .poster .content .header {
+  height: 74px;
+}
+
+.drama-tickets .final .poster .content .header .drama-name {
+  font-weight: 700;
+  font-size: 16px;
+  height: 38px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.drama-tickets .final .poster .content .header .shop-name,
+.drama-tickets .final .poster .content .header .time {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.drama-tickets .final .poster .content .header .time {
+  color: #888;
+}
+
+.drama-tickets .final .poster .content .header .small-cover {
+  float: right;
+  border-radius: 3px;
+  height: 70px;
+  margin-left: 10px;
+}
+
+.drama-tickets .final .poster .content .line {
+  border: 1px dashed;
+  margin: 20px 7px;
+}
+
+.drama-tickets .final .poster .content .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 30px;
+  position: absolute;
+  top: 100px;
+}
+
+.drama-tickets .final .poster .content .dot.left {
+  left: -5px;
+}
+
+.drama-tickets .final .poster .content .dot.right {
+  right: -5px;
+}
+
+.drama-tickets .final .poster .content .body .cell {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.drama-tickets .final .poster .content .body .cell .subtitle {
+  color: #888;
+  display: inline-block;
+  width: 70px;
+  transform: scale(0.8);
+  margin-left: -5px;
+}
+
+.drama-tickets .final .poster .content .body .cell .value {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.drama-tickets .final .poster .content .body .stamp {
+  position: absolute;
+  width: 60px;
+  right: 40px;
+  top: 70px;
+}
+
+.drama-tickets .final .poster .content .footer {
+  position: relative;
+  height: 54px;
+}
+
+@font-face {
+  font-family: "zhuanshu";
+  src: url("zhuanshu.ttf");
+}
+
+@font-face {
+  font-family: "sf-pro";
+  src: url("SF-Pro-Display-Light.otf");
+}
+
+.drama-tickets .final .poster .content .footer .slogan {
+  font-family: "zhuanshu";
+  padding-top: 25px;
+  font-size: 13px;
+  color: #888;
+  transform: scale(0.8);
+  /* display: inline-block; */
+  margin-left: -26px;
+}
+
+.drama-tickets .final .poster .content .footer .avatar {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50px;
+}
+
+.drama-tickets .final .poster .content .footer .qrcode-img {
+  float: right;
+  width: 54px;
+  border-radius: 100px;
+}
+
+.drama-tickets .final .poster.chenjin .content {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  border-radius: 0;
+  padding: 0;
+}
+
+.drama-tickets .final .poster.chenjin .content .header {
+  padding: 10px;
+  height: 94px;
+  border-bottom: 1px solid #fff;
+}
+
+.drama-tickets .final .poster.chenjin .content .slogan,
+.drama-tickets .final .poster.chenjin .content .time {
+  color: hsla(0, 0%, 100%, 0.6);
+}
+
+.drama-tickets .final .poster.chenjin .content .cell {
+  padding: 10px;
+  width: 50%;
+  width: calc(50% + 2px);
+  display: inline-block;
+  margin: -1px -1px 0;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
+}
+
+.drama-tickets .final .poster.chenjin .content .cell .value {
+  display: block;
+}
+
+.drama-tickets .final .poster.chenjin .content .cell .subtitle {
+  margin-left: -7px;
+  color: hsla(0, 0%, 100%, 0.6);
+}
+
+.drama-tickets .final .poster.chenjin .content .cell:first-child {
+  width: calc(100% + 2px);
+  border-right: none;
+}
+
+.drama-tickets .final .poster.chenjin .content .footer {
+  padding: 10px;
+  height: 74px;
+}
+
+.drama-tickets .final .poster.chenjin .content .stamp {
+  display: none;
+}
+
+.drama-tickets .final .poster.yishi {
+  padding: 15px;
+}
+
+.drama-tickets .final .poster.yishi .content {
+  padding: 20px;
+}
+
+.drama-tickets .final .poster.yishi .header {
+  margin-top: 20px;
+}
+
+.drama-tickets .final .poster.yishi .dot {
+  width: 30px;
+  height: 30px;
+}
+
+.drama-tickets .final .poster.yishi .dot.left {
+  margin-left: -10px;
+}
+
+.drama-tickets .final .poster.yishi .dot.right {
+  margin-right: -10px;
+}
+
+.drama-tickets .loader {
+  padding: 10px 0 10px 30px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.drama-tickets .loader:before {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin-left: -30px;
+  border: 2px solid #fff;
+  border-left-color: transparent;
+  border-radius: 10px;
+  animation: rolling 1s infinite;
+  content: "";
+}
+
+@keyframes rolling {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.drama-tickets .final-tip {
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  padding: 20px 0;
+  color: #fff;
+  margin: 0 auto;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+.drama-tickets .main-btn {
+  background-color: #f6cf5f;
+  border-radius: 4px;
+  color: #322f2f;
+  font-weight: 700;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  margin: 0 auto 20px;
+}
+
+.drama-tickets .half-btn {
+  border-radius: 4px;
+  font-weight: 700;
+  width: 50%;
+  display: inline-block;
+  padding: 10px 0;
+  text-align: center;
+  border: 1px solid #f6cf5f;
+  width: calc(50% - 10px);
+  margin: 0 5px 20px;
+}
+
+.drama-tickets .half-btn.solid {
+  background-color: #f6cf5f;
+  color: #322f2f;
+}
+
+.drama-tickets .half-btn.line {
+  color: #f6cf5f;
+}
+
+.drama-tickets .radio-btn {
+  display: inline-block;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 4px 6px;
+  border-radius: 5px;
+  margin: 0 8px 8px 0;
+  font-size: 12px;
+}
+
+.drama-tickets .radio-btn.active {
+  background: #f6cf5f;
+  color: #000;
+  border-color: #f6cf5f;
+}
+
+.drama-tickets .back-btn {
+  border: 1px solid #fff;
+  padding: 5px 7px;
+  border-radius: 4px;
+  color: #fff;
+  opacity: 0.9;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.drama-tickets .spu-list .spu {
+  display: inline-block;
+  width: calc(33% - 10px);
+  height: 110px;
+  padding-top: 10px;
+  margin: 0 5px 10px;
+  overflow: hidden;
+  opacity: 0.9;
+  text-align: center;
+  vertical-align: top;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.drama-tickets .spu-list .spu .spu-cover {
+  width: 50px;
+  height: 62px;
+  border-radius: 3px;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.drama-tickets .spu-list .spu .spu-name {
+  margin-top: 5px;
+  padding: 0 5px;
+  font-size: 13px;
+}
+
+.drama-tickets .template-list .template {
+  display: inline-block;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 4px 6px;
+  border-radius: 5px;
+  margin: 0 8px 8px 0;
+  font-size: 12px;
+}
+
+.drama-tickets .template-list .template.active {
+  background: #f6cf5f;
+  color: #000;
+  border-color: #f6cf5f;
+}
