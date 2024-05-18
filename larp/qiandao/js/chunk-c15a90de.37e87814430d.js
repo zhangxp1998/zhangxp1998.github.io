@@ -35,8 +35,8 @@
                     staticClass: "front-top",
                     style: {
                       backgroundImage: this.shopId
-                        ? "url(https://cdn.qiandaoapp.com/interior/images/66b1bb5f59b01975911ebc5ee592b0b9.png)"
-                        : "url(https://cdn.qiandaoapp.com/interior/images/f497eab51ec33180f994481cf3c24ea4.png)",
+                        ? "url(../img/66b1bb5f59b01975911ebc5ee592b0b9.png)"
+                        : "url(../img/f497eab51ec33180f994481cf3c24ea4.png)",
                     },
                   }),
                   s("div", { staticClass: "front-bottom" }),
@@ -110,9 +110,7 @@
                                                     on: {
                                                       click: function (s) {
                                                         return t.handleSelectSpu(
-                                                          a.name,
-                                                          a.spuImg,
-                                                          a.spuId
+                                                          a
                                                         );
                                                       },
                                                     },
@@ -121,9 +119,7 @@
                                                     s("img", {
                                                       staticClass: "spu-cover",
                                                       attrs: {
-                                                        src:
-                                                          a.spuImg +
-                                                          "!lfit_w240_jpg",
+                                                        src: a.spuImg,
                                                       },
                                                     }),
                                                     s(
@@ -439,8 +435,7 @@
                                           staticClass: "small-cover",
                                           attrs: {
                                             src: t.characterCoverUrl
-                                              ? t.characterCoverUrl +
-                                                "!lfit_w240_jpg"
+                                              ? t.characterCoverUrl
                                               : t.dramaCoverUrl,
                                           },
                                         }),
@@ -490,7 +485,7 @@
                                         s("img", {
                                           staticClass: "stamp",
                                           attrs: {
-                                            src: "https://cdn.qiandaoapp.com/interior/images/91678f34051a0d148b582c1887cacde8.png",
+                                            src: "../img/stamp.png",
                                           },
                                         }),
                                       ]),
@@ -515,7 +510,7 @@
                                             s("img", {
                                               staticClass: "qrcode-img",
                                               attrs: {
-                                                src: "https://cdn.qiandaoapp.com/interior/images/7c901c7c09c45537f9bf64eace2d9d05.png",
+                                                src: "../img/qrcode.png",
                                               },
                                             }),
                                             t._m(5),
@@ -540,8 +535,7 @@
                                         staticClass: "small-cover",
                                         attrs: {
                                           src: t.characterCoverUrl
-                                            ? t.characterCoverUrl +
-                                              "!lfit_w240_jpg"
+                                            ? t.characterCoverUrl
                                             : t.dramaCoverUrl,
                                         },
                                       }),
@@ -633,7 +627,7 @@
                                       s("img", {
                                         staticClass: "stamp",
                                         attrs: {
-                                          src: "https://cdn.qiandaoapp.com/interior/images/91678f34051a0d148b582c1887cacde8.png",
+                                          src: "../img/stamp.png",
                                         },
                                       }),
                                     ]),
@@ -658,7 +652,7 @@
                                           s("img", {
                                             staticClass: "qrcode-img",
                                             attrs: {
-                                              src: "https://cdn.qiandaoapp.com/interior/images/7c901c7c09c45537f9bf64eace2d9d05.png",
+                                              src: "../img/qrcode.png",
                                             },
                                           }),
                                           t._m(3),
@@ -683,8 +677,7 @@
                                       staticClass: "small-cover",
                                       attrs: {
                                         src: t.characterCoverUrl
-                                          ? t.characterCoverUrl +
-                                            "!lfit_w240_jpg"
+                                          ? t.characterCoverUrl
                                           : t.dramaCoverUrl,
                                       },
                                     }),
@@ -738,7 +731,7 @@
                                     s("img", {
                                       staticClass: "stamp",
                                       attrs: {
-                                        src: "https://cdn.qiandaoapp.com/interior/images/91678f34051a0d148b582c1887cacde8.png",
+                                        src: "../img/stamp.png",
                                       },
                                     }),
                                   ]),
@@ -763,7 +756,7 @@
                                         s("img", {
                                           staticClass: "qrcode-img",
                                           attrs: {
-                                            src: "https://cdn.qiandaoapp.com/interior/images/7c901c7c09c45537f9bf64eace2d9d05.png",
+                                            src: "../img/qrcode.png",
                                           },
                                         }),
                                         t._m(1),
@@ -934,24 +927,14 @@
                 console.error(s);
               }
             },
-            async getCharacterDetail(t) {
-              try {
-                const s = await h["a"].getSpuOpposite({
-                  aggregate: !0,
-                  limit: 50,
-                  offset: 0,
-                  propertyId: "1285583",
-                  spuId: t,
-                });
-                ("{}" !== JSON.stringify(s.data)) & (s.data.list.length > 0) &&
-                  (this.characterList = s.data.list);
-              } catch (s) {
-                console.error(s);
+            async getCharacterDetail(characters) {
+              if (characters && characters.length > 0) {
+                this.characterList = characters;
               }
             },
             async getCoverColor(t) {
-              const { data: s } = await C.a.get(t + "!color");
-              this.coverColor = "#" + s.RGB.slice(2, 8);
+              // const { data: s } = await C.a.get(t + "!color");
+              // this.coverColor = "#" + s.RGB.slice(2, 8);
             },
             handleRenderClick() {
               (this.part = 3), (this.image = ""), this.drawImage();
@@ -991,7 +974,6 @@
                       ) {
                         return false;
                       }
-                      console.log(elem);
                       return true;
                     },
                   })
@@ -1019,32 +1001,46 @@
                 offset: this.userMarkList.length,
                 userId: t,
               };
+              if (!window.location.host.startsWith("localhost")) {
+                this.loading = 0;
+                return;
+              }
               try {
                 const t = await m["a"].getUserHobbyMark(s);
-                "{}" !== JSON.stringify(t.data) &&
-                  ((this.userMarkList = this.userMarkList.concat(
+                if ("{}" !== JSON.stringify(t.data)) {
+                  this.userMarkList = this.userMarkList.concat(
                     t.data.markDetails.map((t) => t.spu)
-                  )),
-                  (this.userMarkCount = Number(
+                  );
+                  this.userMarkCount = Number(
                     t.data.markCountWords.match(/\d+/g)
-                  )),
+                  );
                   this.userMarkList.length < this.userMarkCount
                     ? (this.hasMore = !0)
-                    : (this.hasMore = !1));
+                    : (this.hasMore = !1);
+                }
+                if (window.ticketsData) {
+                  for (let game of this.userMarkList) {
+                    const localRecord = ticketsData.find(
+                      (p) => p.spuId == game.spuId
+                    );
+                    if (localRecord) {
+                      Object.assign(game, localRecord);
+                    }
+                  }
+                }
                 window.userMarkList = this.userMarkList;
               } catch (a) {
                 console.error(a);
               }
               this.isLoading = !1;
             },
-            handleSelectSpu(t, s, a) {
-              (this.part = 2),
-                (this.dramaName = t),
-                (this.dramaCoverUrl = s),
-                this.getCoverColor(s),
-                (this.spuId = a),
-                this.getCharacterDetail(a),
-                this.getUserMark(a);
+            handleSelectSpu(game) {
+              this.part = 2;
+              this.dramaName = game.name;
+              this.dramaCoverUrl = game.spuImg;
+              this.coverColor = "#" + game.coverColor.slice(2, 8);
+              this.spuId = game.spuId;
+              this.characterList = game.characters;
             },
             async getUserMark(t) {
               try {
@@ -1079,24 +1075,11 @@
             },
             async handleMark() {
               let gameName = prompt("请输入要添加的剧本名");
-              let data = await m["a"].addKeywordHobbyMark(gameName);
-              if (data["code"] != 200) {
-                return;
-              }
-              let games = data["data"]["items"].filter(
-                (item) => item.spuShow?.item_label == "剧本杀"
+              let data = ticketsData.filter((item) =>
+                item.name.includes(gameName)
               );
-              this.userMarkList = this.userMarkList.concat(
-                games.map((item) => {
-                  let spuImg = item.spuShow?.imgs.cover;
-                  return {
-                    name: item.spuShow?.name,
-                    spuId: item.spuShow?.id,
-                    spuImg,
-                  };
-                })
-              );
-              console.log(games);
+              console.log(data);
+              this.userMarkList = this.userMarkList.concat(data);
             },
             toShop() {
               const t =

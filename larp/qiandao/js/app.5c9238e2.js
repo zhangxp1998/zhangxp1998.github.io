@@ -37,7 +37,6 @@
         "chunk-0b1d9cc5": "c1f70090b445",
         "chunk-0ba5c266": "4c38e00e8a50",
         "chunk-13747e69": "78306d971493",
-        "chunk-1f3a8c09": "0d3f44d44e4b",
         "chunk-24ab64b9": "4c431756a57f",
         "chunk-2705974d": "608c073ec5ed",
         "chunk-2d0b1a42": "4c8a89753195",
@@ -93,6 +92,7 @@
         "chunk-72e35441": "af530d45e632",
         "chunk-747c0a6d": "70aa84b0ac56",
         "chunk-77f822ac": "8b547a3a1ba2",
+        "chunk-7b34f3f4": "82e647d19545",
         "chunk-7df7e983": "8995eead3889",
         "chunk-8b29317e": "500524801e12",
         "chunk-8cf783b0": "e107799fba89",
@@ -104,7 +104,6 @@
         "chunk-031d8eea": "2443156d3dab",
         "chunk-60350165": "2df30c3eb5fa",
         "chunk-08426820": "9d7140792867",
-        "chunk-086a2b54": "6bf16b46c0a8",
         "chunk-09c19af2": "6d8d10cf17ac",
         "chunk-11b2fbab": "cfc62e3f03fe",
         "chunk-16f58286": "e8ab32568a62",
@@ -183,6 +182,7 @@
         "chunk-6960130c": "c846442f0610",
         "chunk-23d60b72": "ddf18e3a8131",
         "chunk-4199db0a": "95e309824bb7",
+        "chunk-7f7dcc5e": "251f7d1fd900",
         "chunk-a2205844": "c025444defaf",
         "chunk-a6fd5566": "869fc41f0764",
         "chunk-ba4f008e": "339b691ab763",
@@ -207,7 +207,6 @@
         "chunk-0b1d9cc5": 1,
         "chunk-0ba5c266": 1,
         "chunk-13747e69": 1,
-        "chunk-1f3a8c09": 1,
         "chunk-24ab64b9": 1,
         "chunk-2705974d": 1,
         "chunk-1392fe73": 1,
@@ -247,6 +246,7 @@
         "chunk-6f902fe4": 1,
         "chunk-72e35441": 1,
         "chunk-77f822ac": 1,
+        "chunk-7b34f3f4": 1,
         "chunk-7df7e983": 1,
         "chunk-8b29317e": 1,
         "chunk-8cf783b0": 1,
@@ -258,7 +258,6 @@
         "chunk-031d8eea": 1,
         "chunk-60350165": 1,
         "chunk-08426820": 1,
-        "chunk-086a2b54": 1,
         "chunk-09c19af2": 1,
         "chunk-11b2fbab": 1,
         "chunk-16f58286": 1,
@@ -336,6 +335,7 @@
         "chunk-6960130c": 1,
         "chunk-23d60b72": 1,
         "chunk-4199db0a": 1,
+        "chunk-7f7dcc5e": 1,
         "chunk-a2205844": 1,
         "chunk-a6fd5566": 1,
         "chunk-ba4f008e": 1,
@@ -361,7 +361,6 @@
                     "chunk-0b1d9cc5": "17b7c797",
                     "chunk-0ba5c266": "cf7df54b",
                     "chunk-13747e69": "73c6682b",
-                    "chunk-1f3a8c09": "1529fc00",
                     "chunk-24ab64b9": "e2216978",
                     "chunk-2705974d": "c22896a2",
                     "chunk-2d0b1a42": "31d6cfe0",
@@ -417,6 +416,7 @@
                     "chunk-72e35441": "e93d9c7a",
                     "chunk-747c0a6d": "31d6cfe0",
                     "chunk-77f822ac": "becad8cb",
+                    "chunk-7b34f3f4": "1529fc00",
                     "chunk-7df7e983": "64c20abe",
                     "chunk-8b29317e": "f69644a2",
                     "chunk-8cf783b0": "ce0f0461",
@@ -428,7 +428,6 @@
                     "chunk-031d8eea": "1b706ff4",
                     "chunk-60350165": "241f8d01",
                     "chunk-08426820": "67bf74c8",
-                    "chunk-086a2b54": "d0ae2039",
                     "chunk-09c19af2": "7f92c922",
                     "chunk-11b2fbab": "0b7b0486",
                     "chunk-16f58286": "46a64b53",
@@ -507,6 +506,7 @@
                     "chunk-6960130c": "72b0fd92",
                     "chunk-23d60b72": "3a543e29",
                     "chunk-4199db0a": "8bb50830",
+                    "chunk-7f7dcc5e": "d0ae2039",
                     "chunk-a2205844": "4f12a28c",
                     "chunk-a6fd5566": "d2cb887c",
                     "chunk-ba4f008e": "1485de9d",
@@ -662,9 +662,7 @@
     "use strict";
     a("48f2");
   },
-  "046e": function (r, e) {
-    r.exports = videojs_10e0fe9866a4b5a3e732;
-  },
+  "046e": function (r, e) {},
   "04b4": function (r, e, a) {
     "use strict";
     function t(r) {
@@ -16774,12 +16772,6 @@
       sA = window.localStorage.getItem(Y["a"]);
     function dA() {
       M["a"].dispatch("app/getApp"),
-        M["a"].dispatch("config/loadConfigs", [
-          "default",
-          "mp-common/default",
-          "mp-common/org",
-          "biz/default",
-        ]),
         M["a"].commit("app/UPDATE_IS_PRODUCTION", !0),
         (window.onpopstate = function (r) {
           M["a"].state.app.app === p["a"].WXMP
@@ -16960,7 +16952,7 @@
         i = e ? Object.keys(e).reduce((r, a) => r + `&${a}=${e[a]}`, "") : "";
       r = r.replace(/^\//, "");
       const A = n["a"][t["a"].state.app.puppet.name] || n["a"].default;
-      return `https://${A}/${r}`;
+      return `https://${A}/${r}?pkg=${a}${i}`;
     }
     const o = (r) => {
       let e = "";
@@ -19351,35 +19343,7 @@
       return n(e) ? e : e + "";
     };
   },
-  a0f0: function (r, e, a) {
-    "use strict";
-    var t = a("17e5"),
-      n = a.n(t),
-      i = a("8d17"),
-      A = a("ed08"),
-      o = a("4360");
-    const f = "production";
-    n.a.init({
-      server_url: "https://sensors-api.qiandao.cn/sa?project=" + f,
-      show_log: !1,
-      heatmap: { clickmap: "not_collect", scroll_notice_map: "not_collect" },
-    }),
-      n.a.registerPage({
-        package_id:
-          i["a"].query2obj(location.href).pkg ||
-          (null === o["a"] || void 0 === o["a"]
-            ? void 0
-            : o["a"].state.app.puppet.id),
-      }),
-      n.a.quick("autoTrack", {
-        platform: Object(A["d"])()
-          ? Object(A["d"])()
-          : Object(A["h"])()
-          ? "mp"
-          : "h5",
-      }),
-      (e["a"] = n.a);
-  },
+  a0f0: function (r, e, a) {},
   a18c: function (r, e, a) {
     "use strict";
     a("13d5");
@@ -19388,1072 +19352,6 @@
       i = a("5a0c"),
       A = a.n(i);
     const o = [
-      {
-        path: "/common/user",
-        name: "CommonUser",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-f1b8821e")]).then(
-            a.bind(null, "3f6f")
-          ),
-      },
-      {
-        path: "/coupon/item-list",
-        name: "couponSpuList",
-        component: () => a.e("chunk-13747e69").then(a.bind(null, "c02c")),
-      },
-      {
-        path: "/sale/list",
-        name: "saleList",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-08426820")]).then(
-            a.bind(null, "8b5b")
-          ),
-      },
-      {
-        path: "/groupon/statistics",
-        name: "GrouponStatistics",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-16f58286")]).then(
-            a.bind(null, "0c92")
-          ),
-      },
-      {
-        path: "/order/detail",
-        name: "OrderDetail",
-        meta: {},
-        component: () => a.e("chunk-3fcc8619").then(a.bind(null, "2be1")),
-      },
-      {
-        path: "/stock/list",
-        name: "StockList",
-        component: () => a.e("chunk-6f902fe4").then(a.bind(null, "4529")),
-      },
-      {
-        path: "/payment/success",
-        name: "PaymentSuccess",
-        meta: { requiredAuth: !0 },
-        component: () => a.e("chunk-5fab572b").then(a.bind(null, "365c")),
-      },
-      {
-        path: "/rules/echo-coin",
-        name: "EchoCoinRule",
-        component: () => a.e("chunk-5ff1309a").then(a.bind(null, "7528")),
-      },
-      {
-        path: "/user/edit",
-        name: "UserEdit",
-        component: () => a.e("chunk-d4fc09d0").then(a.bind(null, "cf30")),
-        meta: { requiredAuth: !0 },
-      },
-      {
-        path: "/address/list",
-        name: "Address",
-        component: () => a.e("chunk-8b29317e").then(a.bind(null, "907f4")),
-        meta: { requiredAuth: !0 },
-      },
-      {
-        path: "/address/edit",
-        name: "EditAddress",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-513e99bd")]).then(
-            a.bind(null, "d17c")
-          ),
-        meta: { requiredAuth: !0 },
-      },
-      {
-        path: "/jump/intro",
-        name: "JumpIntro",
-        component: () => a.e("chunk-7df7e983").then(a.bind(null, "2b67")),
-      },
-      {
-        path: "/jump",
-        name: "Jump",
-        component: () => a.e("chunk-5ce43a85").then(a.bind(null, "b655")),
-      },
-      {
-        path: "/promotion/get-coupon",
-        name: "GetCoupon",
-        component: () =>
-          Promise.all([a.e("chunk-2f7fc5f2"), a.e("chunk-08aa2dc7")]).then(
-            a.bind(null, "25ee")
-          ),
-      },
-      {
-        path: "/promotion/verifaction-code",
-        name: "VerificationCode",
-        component: () => a.e("chunk-3034343c").then(a.bind(null, "e332")),
-      },
-      {
-        path: "/certification/status",
-        name: "Certification",
-        component: () => a.e("chunk-24ab64b9").then(a.bind(null, "5db0")),
-      },
-      {
-        path: "/scheme",
-        name: "Scheme",
-        component: () => a.e("chunk-2d0d6031").then(a.bind(null, "7178")),
-      },
-      {
-        path: "/qrcode",
-        name: "QrCode",
-        component: () => a.e("chunk-41a277de").then(a.bind(null, "1d8f")),
-      },
-      {
-        path: "/electronicSignJump",
-        name: "ElectronicSignJump",
-        component: () => a.e("chunk-63f6bf84").then(a.bind(null, "aa58")),
-      },
-      {
-        path: "/sankeng/search",
-        name: "sankengSearch",
-        component: () =>
-          Promise.all([a.e("chunk-3cf707c7"), a.e("chunk-f50f7c44")]).then(
-            a.bind(null, "07dd")
-          ),
-        meta: { title: "萌款 - 山正查询" },
-      },
-      {
-        path: "/sankeng/jk-police",
-        name: "jkPolice",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-15d7e87d")]).then(
-            a.bind(null, "7d28")
-          ),
-        meta: { title: "召唤JK小警察 - 快来考考你的编制" },
-      },
-      {
-        path: "/bill2021",
-        name: "bill2021",
-        component: () => a.e("chunk-4422d756").then(a.bind(null, "187e")),
-        meta: { title: "年度账单" },
-      },
-      {
-        path: "/drama2022",
-        name: "drama2022",
-        component: () =>
-          Promise.all([
-            a.e("chunk-2d216257"),
-            a.e("chunk-2d217ffe"),
-            a.e("chunk-8c23de32"),
-          ]).then(a.bind(null, "6cfb")),
-        meta: { title: "剧本杀社区年度报告" },
-      },
-      {
-        path: "/shelf/list",
-        name: "shelfList",
-        component: () => a.e("chunk-a9b262fc").then(a.bind(null, "81c4")),
-        meta: { title: "货架列表" },
-      },
-      {
-        path: "/pleaseShop",
-        name: "pleaseShop",
-        component: () => a.e("chunk-332f4825").then(a.bind(null, "3572")),
-        meta: { title: "售后处理" },
-      },
-      {
-        path: "/plugin/pokedex",
-        name: "pokedex",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2d216257"),
-            a.e("chunk-1c1a12df"),
-          ]).then(a.bind(null, "8e48")),
-        meta: { title: "千岛 App - 朱紫宝可梦图鉴" },
-      },
-      {
-        path: "/plugin/favorite-pokemon",
-        name: "favorite-pokemon",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-c4aa93f4")]).then(
-            a.bind(null, "787f")
-          ),
-        meta: { title: "你最喜欢的各属性宝可梦" },
-      },
-      {
-        path: "/plugin/drama-life",
-        name: "drama-life",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-ff6d7ec0")]).then(
-            a.bind(null, "2233")
-          ),
-        meta: { title: "千岛剧本杀生涯个人喜好表" },
-      },
-      {
-        path: "/plugin/ai-ask-wiki",
-        name: "ai-ask-wiki",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2f7fc5f2"),
-            a.e("chunk-57ed8b90"),
-          ]).then(a.bind(null, "8cd3")),
-        meta: { title: "鼠鼠百科" },
-      },
-      {
-        path: "/plugin/drama-life-post",
-        name: "drama-life-post",
-        component: () => a.e("chunk-77f822ac").then(a.bind(null, "3296")),
-        meta: { title: "千岛剧本杀生涯个人喜好表" },
-      },
-      {
-        path: "/plugin/photo-cards-life",
-        name: "photo-cards-life",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2d216257"),
-            a.e("chunk-0f9306ea"),
-          ]).then(a.bind(null, "6de0")),
-        meta: { title: "小卡个人喜好表" },
-      },
-      {
-        path: "/plugin/photo-cards-life-post",
-        name: "photo-cards-life-post",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-11b2fbab")]).then(
-            a.bind(null, "877b")
-          ),
-        meta: { title: "小卡个人喜好表" },
-      },
-      {
-        path: "/plugin/fashion-toys-life",
-        name: "fashion-toys-life",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2d216257"),
-            a.e("chunk-4a717cd4"),
-          ]).then(a.bind(null, "ff6a")),
-        meta: { title: "潮玩个人喜好表" },
-      },
-      {
-        path: "/plugin/stage-show-life",
-        name: "stage-show-life",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-1b1ef1a2")]).then(
-            a.bind(null, "0a56")
-          ),
-        meta: { title: "千岛App观剧生涯喜好表" },
-      },
-      {
-        path: "/plugin/stage-show-life-post",
-        name: "stage-show-life-post",
-        component: () => a.e("chunk-3c08e8ab").then(a.bind(null, "88bb")),
-        meta: { title: "观剧生涯个人喜好表" },
-      },
-      {
-        path: "/plugin/pokemon-team",
-        name: "pokemon-team",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-5427bcd1")]).then(
-            a.bind(null, "5f8a")
-          ),
-        meta: { title: "你的宝可梦队伍" },
-      },
-      {
-        path: "/plugin/drama-doodle",
-        name: "drama-doodle",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-9bb16d62")]).then(
-            a.bind(null, "1707")
-          ),
-        meta: { title: "千岛剧本杀Top250涂涂乐" },
-      },
-      {
-        path: "/plugin/drama-bucket-list",
-        name: "drama-bucket-list",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-5343a233")]).then(
-            a.bind(null, "7ccf")
-          ),
-        meta: { title: "千岛剧本杀50个人生清单" },
-      },
-      {
-        path: "/plugin/tcg-bucket-list",
-        name: "tcg-bucket-list",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-1392fe73")]).then(
-            a.bind(null, "2a88")
-          ),
-        meta: { title: "千岛卡牌50个人生清单" },
-      },
-      {
-        path: "/plugin/animal-crossing-wiki",
-        name: "animal-crossing-wiki",
-        component: () => a.e("chunk-b20c49d0").then(a.bind(null, "83d9")),
-        meta: { title: "千岛电玩 - 高高兴兴动物园图鉴" },
-      },
-      {
-        path: "/plugin/es-cards",
-        name: "es-cards",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-1cc5a637")]).then(
-            a.bind(null, "f548")
-          ),
-        meta: { title: "千岛 App - ES柄图/卡面拼图" },
-      },
-      {
-        path: "/plugin/diablo4-publish",
-        name: "diablo4-publish",
-        component: () => a.e("chunk-1f3a8c09").then(a.bind(null, "de14")),
-        meta: { title: "暗黑4装备武器发布" },
-      },
-      {
-        path: "/plugin/account-report",
-        name: "account-report",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-f0b2d310")]).then(
-            a.bind(null, "2c5d")
-          ),
-        meta: { title: "验号报告" },
-      },
-      {
-        path: "/plugin/diablo4-publish-step2",
-        name: "diablo4-publish-step2",
-        component: () => a.e("chunk-49f1f0c4").then(a.bind(null, "3eb7")),
-        meta: { title: "暗黑4装备武器发布" },
-      },
-      {
-        path: "/plugin/mlp-publish",
-        name: "mlp-publish",
-        component: () => a.e("chunk-4955c51f").then(a.bind(null, "88d8")),
-        meta: { title: "小马宝莉闲置发布" },
-      },
-      {
-        path: "/plugin/mlp-publish-step2",
-        name: "mlp-publish-step2",
-        component: () => a.e("chunk-8cf783b0").then(a.bind(null, "988b")),
-        meta: { title: "小马宝莉闲置发布" },
-      },
-      {
-        path: "/plugin/xiaoka-publish-step2",
-        name: "xiaoka-publish-step2",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-827c3642"),
-            a.e("chunk-d2d4fd32"),
-          ]).then(a.bind(null, "b905")),
-        meta: { title: "小卡批量发布" },
-      },
-      {
-        path: "/plugin/mowan-publish-step2",
-        name: "mowan-publish-step2",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-52314d50"),
-            a.e("chunk-09331812"),
-          ]).then(a.bind(null, "abdc")),
-        meta: { title: "模玩闲置发布" },
-      },
-      {
-        path: "/plugin/c2c-gift-publish-step2",
-        name: "c2c-gift-publish-step2",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-52314d50"),
-            a.e("chunk-54fe0336"),
-          ]).then(a.bind(null, "972b")),
-        meta: { title: "一键转赠" },
-      },
-      {
-        path: "/plugin/kapai-publish-step2",
-        name: "kapai-publish-step2",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-827c3642"),
-            a.e("chunk-08c9fbda"),
-          ]).then(a.bind(null, "69b7")),
-        meta: { title: "卡牌批量发布" },
-      },
-      {
-        path: "/plugin/guquan-publish-step2",
-        name: "guquan-publish-step2",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-827c3642"),
-            a.e("chunk-a238179a"),
-          ]).then(a.bind(null, "d7fd")),
-        meta: { title: "谷圈批量发布" },
-      },
-      {
-        path: "/plugin/xiaoka-identity-publish",
-        name: "xiaoka-identity-publish",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-320274e6"),
-          ]).then(a.bind(null, "6cfd")),
-        meta: { title: "批量出卡" },
-      },
-      {
-        path: "/plugin/aobidao-publish-step2",
-        name: "aobidao-publish-step2",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-827c3642"),
-            a.e("chunk-615330eb"),
-          ]).then(a.bind(null, "1c6b")),
-        meta: { title: "奥比岛批量发布" },
-      },
-      {
-        path: "/plugin/jian3-identity-publish",
-        name: "jian3-publish",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-52d5cd03"),
-          ]).then(a.bind(null, "abb8")),
-        meta: { title: "剑网3" },
-      },
-      {
-        path: "/plugin/disney-publish",
-        name: "disney-publish",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-3cf707c7"),
-            a.e("chunk-5705eb29"),
-          ]).then(a.bind(null, "62b8")),
-        meta: { title: "迪士尼代购" },
-      },
-      {
-        path: "/plugin/disney-publish-new",
-        name: "disney-publish-new",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-18f843fb"),
-          ]).then(a.bind(null, "ac65")),
-        meta: { title: "发布代购信息" },
-      },
-      {
-        path: "/plugin/disney-publish-new/list",
-        name: "disney-publish-new-list",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-725a5f6a"),
-          ]).then(a.bind(null, "51dc")),
-        meta: { title: "迪士尼代购助手" },
-      },
-      {
-        path: "/plugin/category-publish",
-        name: "category-publish",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-57161020")]).then(
-            a.bind(null, "6464e")
-          ),
-        meta: { title: "谷圈拼团" },
-      },
-      {
-        path: "/plugin/category-publish/list",
-        name: "category-publish",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-09c19af2")]).then(
-            a.bind(null, "b002")
-          ),
-        meta: { title: "我的推车图" },
-      },
-      {
-        path: "/plugin/category-publish/search",
-        name: "category-publish",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-fde870e4")]).then(
-            a.bind(null, "2caf")
-          ),
-        meta: { title: "我的推车图" },
-      },
-      {
-        path: "/plugin/xiaoka-publish/list",
-        name: "xiaoka-publish",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-3dc701e2")]).then(
-            a.bind(null, "c277")
-          ),
-        meta: { title: "我的拼车" },
-      },
-      {
-        path: "/plugin/xiaoka-publish/search",
-        name: "xiaoka-search",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-1ed8ad74")]).then(
-            a.bind(null, "e630")
-          ),
-        meta: { title: "选择你想拼的系列" },
-      },
-      {
-        path: "/plugin/xiaoka-publish",
-        name: "xiaoka-publish",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-6960130c"),
-            a.e("chunk-4199db0a"),
-          ]).then(a.bind(null, "18a9")),
-        meta: { title: "编辑拼车详情" },
-      },
-      {
-        path: "/plugin/xiaoka-join",
-        name: "xiaoka-join",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-6960130c"),
-            a.e("chunk-23d60b72"),
-          ]).then(a.bind(null, "d0b9")),
-        meta: { title: "拼车详情" },
-      },
-      {
-        path: "/nfc",
-        name: "nfc",
-        component: () => a.e("chunk-0ba5c266").then(a.bind(null, "596b6")),
-        meta: { title: "千岛" },
-      },
-      {
-        path: "/plugin/Disney",
-        name: "Disney",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-4d16bf9c")]).then(
-            a.bind(null, "ba46")
-          ),
-        meta: { title: "千岛 Disney" },
-      },
-      {
-        path: "/plugin/QiYou",
-        component: () => a.e("chunk-2d0c04c6").then(a.bind(null, "40d8")),
-        meta: { title: "免费领取8天奇游加速时长" },
-        children: [
-          {
-            path: "home",
-            name: "qiyou-index",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-1e6a0d40")]).then(
-                a.bind(null, "4185")
-              ),
-            meta: { title: "千岛电玩 X 奇游" },
-          },
-        ],
-      },
-      {
-        path: "/plugin/price-ocr",
-        name: "PriceOcr",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-ecd08f40")]).then(
-            a.bind(null, "983f")
-          ),
-        meta: { title: "非酋计算器" },
-      },
-      {
-        path: "/plugin/import-drama",
-        name: "ImportDrama",
-        component: () => a.e("chunk-0b1d9cc5").then(a.bind(null, "a9ab")),
-        meta: { title: "导入剧评" },
-      },
-      {
-        path: "/plugin/import-gstone",
-        name: "ImportGstone",
-        component: () => a.e("chunk-2705974d").then(a.bind(null, "a4c4")),
-        meta: { title: "桌游评测同步" },
-      },
-      {
-        path: "/plugin/tier-rank",
-        name: "TierRank",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2d216257"),
-            a.e("chunk-4ea3c16a"),
-          ]).then(a.bind(null, "21e53")),
-        meta: { title: "我的梯队排行榜" },
-      },
-      {
-        path: "/plugin/vote-switch-2022",
-        name: "vote-switch-2022",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-5a1c2b78")]).then(
-            a.bind(null, "e329")
-          ),
-        meta: { title: "千岛电玩 2022 年度游戏大赏" },
-      },
-      {
-        path: "/plugin/vote-drama-2022",
-        name: "vote-drama-2022",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-33d32464")]).then(
-            a.bind(null, "1772")
-          ),
-        meta: { title: "千岛剧本杀2022年度你最喜爱的剧本投票" },
-      },
-      {
-        path: "/plugin/vote-pokemon-2022",
-        name: "vote-pokemon-2022",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-cec96552")]).then(
-            a.bind(null, "93a6")
-          ),
-        meta: { title: "2022年度中国玩家宝可梦评选" },
-      },
-      {
-        path: "/stock2024",
-        name: "stock2024",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-031d8eea"),
-            a.e("chunk-60350165"),
-          ]).then(a.bind(null, "80d3")),
-        meta: { title: "闪购新春立减金" },
-      },
-      {
-        path: "/stock-invitation",
-        name: "stock-invitation",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-031d8eea"),
-            a.e("chunk-13248a5a"),
-          ]).then(a.bind(null, "82c6")),
-        meta: { title: "闪购立减金" },
-      },
-      {
-        path: "/court-evidence-upload",
-        name: "court-evidence-upload",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2f7fc5f2"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-c2b4818c"),
-          ]).then(a.bind(null, "1ada")),
-        meta: { title: "小法庭举证" },
-      },
-      {
-        path: "/bill2022",
-        name: "report-example",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2d216257"),
-            a.e("chunk-2d217ffe"),
-            a.e("chunk-6b73fe88"),
-          ]).then(a.bind(null, "921e")),
-        meta: { title: "2022年度回顾" },
-      },
-      {
-        path: "/luckybag-newyear",
-        name: "luckybag-newyear",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-3fef5e00")]).then(
-            a.bind(null, "260e")
-          ),
-        meta: { title: "福袋新春活动" },
-      },
-      {
-        path: "/bill2023",
-        name: "report-example",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2d216257"),
-            a.e("chunk-2d217ffe"),
-            a.e("chunk-3ddb7013"),
-          ]).then(a.bind(null, "2b47")),
-        meta: { title: "2023年度回顾" },
-      },
-      {
-        path: "/anniversary4",
-        name: "anniversary4",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2d216257"),
-            a.e("chunk-2d217ffe"),
-            a.e("chunk-50443014"),
-          ]).then(a.bind(null, "ae0c")),
-        meta: { title: "乘坐时光机，回忆你的足迹" },
-      },
-      {
-        path: "/plugin/es-producer-card",
-        name: "ESProducerCard",
-        component: () =>
-          Promise.all([
-            a.e("lib"),
-            a.e("chunk-2d216257"),
-            a.e("chunk-b424ef78"),
-          ]).then(a.bind(null, "0c8d")),
-        meta: { title: "制作人名片" },
-      },
-      {
-        path: "/plugin/fire-emblem-engage",
-        name: "emblem-engage",
-        redirect: "fire-emblem-engage",
-        component: () => a.e("chunk-2d2254ce").then(a.bind(null, "e48a")),
-        meta: { title: "千岛 App - 火焰纹章Engage 图鉴" },
-        children: [
-          {
-            meta: { title: "千岛 App - 火焰纹章Engage 图鉴" },
-            path: "",
-            name: "fire-emblem-engage",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-9c2bc83c"),
-              ]).then(a.bind(null, "dce2")),
-          },
-          {
-            meta: { title: "攻略合集" },
-            path: "guideline-detail",
-            name: "FireEmblemEngageGuidelineDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-597f90d7"),
-              ]).then(a.bind(null, "ead0")),
-          },
-          {
-            path: "role-detail",
-            name: "FireEmblemEngageRoleDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-0105b657"),
-              ]).then(a.bind(null, "12a6")),
-            meta: { title: "角色详情", keepAlive: !0 },
-          },
-          {
-            path: "army-detail",
-            name: "FireEmblemEngageArmyDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-2c13dec2"),
-              ]).then(a.bind(null, "91a9")),
-            meta: { title: "兵种详情" },
-          },
-          {
-            path: "ring-detail",
-            name: "FireEmblemEngageRingDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-5fffb844"),
-              ]).then(a.bind(null, "b775")),
-            meta: { title: "戒指详情" },
-          },
-          {
-            path: "special-skill-detail",
-            name: "FireEmblemEngageSpecialSkillDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-5fe3792c"),
-              ]).then(a.bind(null, "a6f5")),
-            meta: { title: "特技详情" },
-          },
-          {
-            path: "weapon-detail",
-            name: "FireEmblemEngageWeaponDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-e27ac9f6"),
-              ]).then(a.bind(null, "08f5")),
-            meta: { title: "武器详情" },
-          },
-        ],
-      },
-      {
-        path: "/plugin/traveler-in-all-directions",
-        name: "TravelerInAllDirections",
-        redirect: "traveler-in-all-directions",
-        component: () => a.e("chunk-2d0ea097").then(a.bind(null, "8fa4")),
-        meta: { title: "千岛 App - 八方旅人2 图鉴" },
-        children: [
-          {
-            meta: { title: "千岛 App - 八方旅人2 图鉴" },
-            path: "",
-            name: "traveler-in-all-directions",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-7aa90fb4"),
-              ]).then(a.bind(null, "2111")),
-          },
-          {
-            meta: { title: "攻略合集" },
-            path: "guideline-detail",
-            name: "TravelerInAllDirectionsDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-0d350b63"),
-              ]).then(a.bind(null, "3be0")),
-          },
-          {
-            meta: { title: "旅人详情" },
-            path: "traveler-detail",
-            name: "TravelDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-3b3eff84"),
-                a.e("chunk-22312098"),
-              ]).then(a.bind(null, "11b3")),
-          },
-          {
-            meta: { title: "战斗职业详情" },
-            path: "combat-class-detail",
-            name: "CombatClassDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-3b3eff84"),
-                a.e("chunk-2637c8a0"),
-              ]).then(a.bind(null, "c164")),
-          },
-          {
-            meta: { title: "地区详情" },
-            path: "region-detail",
-            name: "RegionDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-3b3eff84"),
-                a.e("chunk-142c6c68"),
-              ]).then(a.bind(null, "7a78")),
-          },
-          {
-            meta: { title: "武器详情" },
-            path: "weapon-detail",
-            name: "WeaponDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-d8f1985a"),
-              ]).then(a.bind(null, "d86a")),
-          },
-          {
-            meta: { title: "宝箱详情" },
-            path: "treasure-detail",
-            name: "TreasureDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-503eb2c3"),
-              ]).then(a.bind(null, "a8e4")),
-          },
-          {
-            meta: { title: "NPC详情" },
-            path: "npc-detail",
-            name: "NPCDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-6f1401fa"),
-              ]).then(a.bind(null, "2dee")),
-          },
-          {
-            meta: { title: "支线任务详情" },
-            path: "side-quest-detail",
-            name: "sideQuestDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-15d749d4"),
-              ]).then(a.bind(null, "b316")),
-          },
-          {
-            meta: { title: "魔物详情" },
-            path: "monster-detail",
-            name: "MonsterDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-74d42bb7"),
-              ]).then(a.bind(null, "57e2")),
-          },
-          {
-            meta: { title: "道具详情" },
-            path: "prop-detail",
-            name: "PropDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-047db2f4"),
-              ]).then(a.bind(null, "7180")),
-          },
-          {
-            meta: { title: "防具详情" },
-            path: "guard-detail",
-            name: "GuardDetail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-2d0c778e"),
-                a.e("chunk-6755fca2"),
-              ]).then(a.bind(null, "7636")),
-          },
-        ],
-      },
-      {
-        path: "/example/report",
-        name: "report-example",
-        component: () =>
-          Promise.all([a.e("chunk-2d217ffe"), a.e("chunk-170f72c0")]).then(
-            a.bind(null, "949f")
-          ),
-        meta: { title: "报告类项目示例" },
-      },
-      {
-        path: "/plugin/game-launcher",
-        name: "game-launcher",
-        component: () => a.e("chunk-628080f6").then(a.bind(null, "3720")),
-        meta: { title: "游戏图鉴" },
-      },
-      {
-        path: "/plugin/ptcg",
-        name: "ptcg",
-        component: () => a.e("chunk-2d0c89bb").then(a.bind(null, "5637")),
-        props: (r) => ({ ...r.query }),
-        meta: { title: "千岛 App - 简中 PTCG 卡查" },
-        redirect: "ptcg-home",
-        children: [
-          {
-            path: "",
-            name: "ptcg-home",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-3c6074ed")]).then(
-                a.bind(null, "00e9")
-              ),
-            meta: { title: "千岛 App - 简中 PTCG 卡查" },
-          },
-          {
-            path: "my",
-            name: "ptcg-my",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-25d647ac")]).then(
-                a.bind(null, "cfd7")
-              ),
-            meta: { title: "我的卡组" },
-          },
-        ],
-      },
-      {
-        path: "/plugin/Genshin",
-        name: "Genshin-Impact",
-        redirect: "genshin-index",
-        component: () => a.e("chunk-2d0cbb1e").then(a.bind(null, "4b82")),
-        meta: { title: "千岛 App - 原神卡查" },
-        children: [
-          {
-            path: "",
-            name: "genshin-index",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-f9884762")]).then(
-                a.bind(null, "c7a9")
-              ),
-            meta: { title: "原神卡查" },
-          },
-          {
-            path: "my",
-            name: "genshin-index",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-371a2133")]).then(
-                a.bind(null, "77e6")
-              ),
-            meta: { title: "我的牌组" },
-          },
-        ],
-      },
-      {
-        path: "/plugin/Zelda",
-        name: "Zelda-Impact",
-        redirect: "zelda-create-post",
-        component: () => a.e("chunk-2d221c34").then(a.bind(null, "cc75")),
-        meta: { title: "千岛 App - 究极手蓝图" },
-        children: [
-          {
-            path: "/",
-            name: "zelda-items",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-bf0d880c")]).then(
-                a.bind(null, "3066")
-              ),
-            meta: { title: "究极手蓝图" },
-          },
-          {
-            path: "create-post",
-            name: "zelda-create-post",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-03176bef")]).then(
-                a.bind(null, "7821")
-              ),
-            meta: { title: "究极手蓝图" },
-          },
-          {
-            path: "my",
-            name: "zelda-my",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-a6fd5566")]).then(
-                a.bind(null, "5c6f")
-              ),
-            meta: { title: "我的蓝图" },
-          },
-        ],
-      },
       {
         path: "/plugin/drama-tickets",
         name: "drama-tickets",
@@ -20466,285 +19364,15 @@
         meta: { title: "剧本杀票根" },
       },
       {
-        path: "/plugin/drama-tickets-shop",
-        name: "drama-tickets-shop",
-        component: () => a.e("chunk-544c9814").then(a.bind(null, "265f")),
-        meta: { title: "制作实体票根" },
-      },
-      {
-        path: "/plugin/quiz",
-        name: "quiz",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-ba4f008e")]).then(
-            a.bind(null, "6642")
-          ),
-        meta: { title: "千岛答题测试" },
-      },
-      {
-        path: "/plugin/cast-selector",
-        name: "cast-selector",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-50fd3103")]).then(
-            a.bind(null, "9ff5")
-          ),
-        meta: { title: "千岛角色测试" },
-      },
-      {
-        path: "/plugin/avp",
-        name: "avp",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-ce148bc0")]).then(
-            a.bind(null, "8a1a")
-          ),
-        meta: { title: "提前看看你戴 Vision Pro 的样子" },
-      },
-      {
-        path: "/plugin/aigc/:id",
-        name: "aigc",
-        component: () => a.e("chunk-72e35441").then(a.bind(null, "9fde")),
-        props: (r) => ({ ...r.query, ...r.params }),
-        meta: { title: "千岛 App", requiredAuth: !0 },
-        redirect: "aigc-home",
-        children: [
-          {
-            path: "",
-            name: "aigc-home",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-637caa53"),
-                a.e("chunk-374894a6"),
-              ]).then(a.bind(null, "b4cd")),
-            props: (r) => ({ ...r.query, ...r.params }),
-            meta: { title: "千岛 App" },
-          },
-          {
-            path: "role",
-            name: "aigc-role",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-39163d48")]).then(
-                a.bind(null, "f9b3")
-              ),
-            props: (r) => ({ ...r.query, ...r.params }),
-          },
-          {
-            path: "model",
-            name: "aigc-model",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-a2205844")]).then(
-                a.bind(null, "2f04")
-              ),
-            props: (r) => ({ ...r.query, ...r.params }),
-          },
-          {
-            path: "prompt",
-            name: "aigc-prompt",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-fd2613a4")]).then(
-                a.bind(null, "c70e")
-              ),
-            props: (r) => ({ ...r.query, ...r.params }),
-          },
-          {
-            path: "book",
-            name: "aigc-book",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-49542323")]).then(
-                a.bind(null, "e955")
-              ),
-            props: (r) => ({ ...r.query, ...r.params }),
-            meta: { title: "咒语书" },
-          },
-          {
-            path: "record-detail",
-            name: "aigc-record-detail",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-637caa53"),
-                a.e("chunk-77e94dba"),
-              ]).then(a.bind(null, "3d24")),
-            props: (r) => ({ ...r.query, ...r.params }),
-            meta: { title: "千岛 App" },
-          },
-          {
-            path: "search",
-            name: "aigc-search",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-637caa53"),
-                a.e("chunk-722a9a6e"),
-              ]).then(a.bind(null, "995e")),
-            props: (r) => ({ ...r.query, ...r.params }),
-            meta: { title: "搜索" },
-          },
-        ],
-      },
-      {
-        path: "/drama/coupon",
-        name: "drama-coupon",
-        component: () => a.e("chunk-f1d8497e").then(a.bind(null, "b6ef")),
-        meta: { title: "千岛神券" },
-      },
-      {
-        path: "/plugin/expendcard",
-        name: "ESExpendCard",
-        component: () => a.e("chunk-2d216bc9").then(a.bind(null, "c479")),
-        props: (r) => ({ ...r.query }),
-        meta: { title: "千岛 App - 小卡扩列卡片" },
-        redirect: "expend-card-home",
-        children: [
-          {
-            path: "",
-            name: "expend-card-home",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-086a2b54")]).then(
-                a.bind(null, "8661")
-              ),
-            meta: { title: "千岛 App - 小卡扩列卡片" },
-          },
-        ],
-      },
-      {
-        path: "/plugin/emotiondrama",
-        name: "ESExpendCard",
-        component: () => a.e("chunk-2d2138e8").then(a.bind(null, "acd4")),
-        props: (r) => ({ ...r.query }),
-        meta: { title: "千岛 App - 我的情感DNA" },
-        redirect: "emotion-drama-profile",
-        children: [
-          {
-            path: "",
-            name: "emotion-drama-profile",
-            component: () =>
-              Promise.all([a.e("lib"), a.e("chunk-671eb5ba")]).then(
-                a.bind(null, "647b")
-              ),
-            meta: { title: "千岛 App - 我的情感DNA" },
-          },
-        ],
-      },
-      {
-        path: "/plugin/aichat",
-        name: "ai-chat",
-        component: () => a.e("chunk-2d0b1a42").then(a.bind(null, "215b")),
-        props: (r) => ({ ...r.query }),
-        meta: { title: "千岛 App - AI问答" },
-        redirect: "ai-chat",
-        children: [
-          {
-            path: "",
-            name: "ai-chat",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-637caa53"),
-                a.e("chunk-4bc16d5a"),
-              ]).then(a.bind(null, "35b1")),
-            meta: { title: "千岛 App - AI问答" },
-          },
-        ],
-      },
-      {
-        path: "/plugin/custom-checklist",
-        name: "custom-checklist",
-        component: () => a.e("chunk-2d0dd67d").then(a.bind(null, "80f5")),
-        props: (r) => ({ ...r.query }),
-        meta: { title: "个人喜好表" },
-        children: [
-          {
-            path: "",
-            name: "custom-checklist-home",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-637caa53"),
-                a.e("chunk-f949a488"),
-                a.e("chunk-6b8261ef"),
-              ]).then(a.bind(null, "b4e9")),
-            props: (r) => ({ ...r.query }),
-            meta: { title: "个人喜好表", keepAlive: !0, sharable: !0 },
-          },
-          {
-            path: "template",
-            name: "custom-checklist-template",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-637caa53"),
-                a.e("chunk-f949a488"),
-                a.e("chunk-5313236a"),
-              ]).then(a.bind(null, "3b9f")),
-            props: (r) => ({ ...r.query }),
-            meta: { title: "个人喜好表" },
-          },
-          {
-            path: "realtime-ranking",
-            name: "realtime-ranking",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-637caa53"),
-                a.e("chunk-a2f8243c"),
-              ]).then(a.bind(null, "c2ce")),
-            props: (r) => ({ ...r.query }),
-            meta: { title: "实时排名", sharable: !0 },
-          },
-          {
-            path: "plugin-template-list",
-            name: "plugin-template-list",
-            component: () =>
-              Promise.all([
-                a.e("lib"),
-                a.e("chunk-2f7fc5f2"),
-                a.e("chunk-637caa53"),
-                a.e("chunk-78a95146"),
-              ]).then(a.bind(null, "8501")),
-            props: (r) => ({ ...r.query }),
-            meta: { title: "自定义喜好表模板列表" },
-          },
-        ],
-      },
-      {
-        path: "/plugin/hobby-card",
-        name: "hobby-card",
-        component: () =>
-          Promise.all([a.e("chunk-2d216257"), a.e("chunk-552f57dc")]).then(
-            a.bind(null, "c7ad")
-          ),
-        props: (r) => ({ ...r.query }),
-        meta: { title: "千岛岛民卡" },
-      },
-      {
-        path: "/phone-change",
-        name: "phone-change",
+        path: "/plugin/drama-tickets.html",
+        name: "drama-tickets",
         component: () =>
           Promise.all([
             a.e("lib"),
-            a.e("chunk-637caa53"),
-            a.e("chunk-c0f30b1c"),
-          ]).then(a.bind(null, "5a2a")),
-        meta: { title: "更换手机号" },
-      },
-      {
-        path: "/plugin/bgg-rank",
-        name: "bgg-rank",
-        component: () => a.e("chunk-3bf8a157").then(a.bind(null, "334c")),
-        props: (r) => ({ ...r.query }),
-        meta: { title: "千岛 App - BGG 榜单" },
-      },
-      {
-        path: "/plugin/Palworld-Mate",
-        name: "PalworldMate",
-        component: () =>
-          Promise.all([a.e("lib"), a.e("chunk-3c455b07")]).then(
-            a.bind(null, "025a")
-          ),
-        props: (r) => ({ ...r.query }),
-        meta: { title: "千岛 App - 帕鲁配方" },
+            a.e("chunk-2d216257"),
+            a.e("chunk-c15a90de"),
+          ]).then(a.bind(null, "4c05")),
+        meta: { title: "剧本杀票根" },
       },
     ];
     var f = o,
@@ -20837,7 +19465,7 @@
               a
                 ? ("token" !== a && "addressId" !== a && (e[a] = r.query[a]), e)
                 : e,
-            {}
+            { pkg: u["a"].state.app.puppet.id }
           );
           a({
             path: r.path,
@@ -21851,16 +20479,16 @@
             h =
               (typeof Reflect == e(374) && Reflect[e(661)]) ||
               (u
-                ? d.bind(s)
+                ? d[e(601)](s)
                 : function () {
                     var r = e;
                     return d[r(661)](s, arguments);
                   }),
             b = f,
-            p = Function.prototype,
-            v = p.bind,
-            m = p.call,
-            k = b && v.bind(m, m),
+            p = Function[e(357)],
+            v = p[e(601)],
+            m = p[e(335)],
+            k = b && v[e(601)](m, m),
             g = b
               ? function (r) {
                   return r && k(r);
@@ -21899,7 +20527,7 @@
             V = f,
             Z = Function[e(357)][e(335)],
             O = V
-              ? Z["bind"](Z)
+              ? Z[e(601)](Z)
               : function () {
                   var r = e;
                   return Z[r(661)](Z, arguments);
@@ -22210,7 +20838,7 @@
             ze = Qe,
             qe = Br,
             Ke = f,
-            $e = g(g["bind"]),
+            $e = g(g[e(601)]),
             ra = function (r, e) {
               return (
                 qe(r),
@@ -26301,9 +24929,9 @@
             let a = {};
             r[e(754)]((r, e) => (a[r] = e));
           })(Bm);
-          const Dm = String[e(719)]["bind"](String);
+          const Dm = String[e(719)][e(601)](String);
           "function" == typeof Uint8Array.from &&
-            Uint8Array.from["bind"](Uint8Array);
+            Uint8Array.from[e(601)](Uint8Array);
           const Sm = Om
               ? (r) => btoa(r)
               : Rm
@@ -27594,94 +26222,24 @@
                         I,
                         C,
                         W = l;
-                      function sign(r, D, gm, B) {
-                        // console.log(Gm, Um, r.t1);
-                        g = fk(t);
-                        k = r.t1;
-                        w = Qk(
-                          Qk(
-                            {},
-                            gm["parse"](g["query"]["replace"](/^\?/, ""), {
-                              parseNumbers: !1,
-                              arrayFormat: "bracket",
-                            })
-                          ),
-                          gm["parse"](
-                            gm["stringify"](p || {}, {
-                              strict: !1,
-                              arrayFormat: "bracket",
-                            }),
-                            { arrayFormat: "bracket" }
-                          )
-                        );
-                        y = gm["stringify"](
-                          st(w)["reduce"](function (r, e) {
-                            var a = B,
-                              t = D,
-                              n = w[e];
-                            return (
-                              Array["isArray"](n) && (n = km(n)["call"](n, Uk)),
-                              (r[e] = n),
-                              r
-                            );
-                          }, {}),
-                          {
-                            arrayFormat: "bracket",
-                            strict: !1,
-                            sort: Uk,
-                          }
-                        );
-                        E = c || "";
-                        I = g["path"] + g["file"];
-                        V = void 0;
-                        V = n;
-                        // v -= 50000;
-                        C =
-                          I +
-                          ((_ = y)
-                            ? _["split"]("&")["reduce"](function (r, e, a) {
-                                var t = Bv(e["split"]("="), 2),
-                                  n = t[0],
-                                  i = t[1];
-                                return (
-                                  r +
-                                  (a > 0 ? "&" : "") +
-                                  (n = encodeURIComponent(n)) +
-                                  "=" +
-                                  (i || "")
-                                );
-                              }, "")
-                            : "") +
-                          E +
-                          v;
-                        let headers = {
-                          "X-Request-Sign": Gm(Um(k, C)),
-                          "X-Request-Timestamp": v,
-                          "X-Request-Package-Sign-Version": o,
-                          "X-Request-Sign-Version": "v1",
-                          "X-Request-Sign-Type": f,
-                        };
-                        console.log(k, C, Um(k, C), headers["X-Request-Sign"]);
-                        return r["abrupt"]("return", headers);
-                      }
                       return lv[W(586) + "p"](function (r) {
                         for (var _, V, Z, O, R, x, B = W, D = Mk; ; )
-                          switch ((r["prev"] = r["next"])) {
+                          switch ((r[D(168) + "v"] = r[D(128) + "t"])) {
                             case 0:
-                              (t = a["url"]),
-                                (i = a["requestId"]),
+                              (t = a[D(122)]),
+                                (i = a[D(149) + D(174) + B(257)]),
                                 (c = void 0 === i ? "" : i),
-                                (s = a["timestamp"]),
-                                (d = a["skey"]),
+                                (s = a[D(148) + D(172) + D(158)]),
+                                (d = a[D(180) + "y"]),
                                 (b = void 0 === d ? "" : d),
-                                (p = a["query"]),
+                                (p = a[D(181) + "ry"]),
                                 (r.t0 = A),
-                                (r["next"] =
-                                  r.t0 === "miniprogram"
+                                (r[D(128) + "t"] =
+                                  r.t0 === D(111) + D(176) + B(194) + "am"
                                     ? 4
-                                    : r.t0 === "web"
+                                    : r.t0 === D(112)
                                     ? 7
-                                    : r.t0 === "l0b0b"
+                                    : r.t0 === D(117) + "0b"
                                     ? 10
                                     : 11);
                               break;
@@ -27691,36 +26249,39 @@
                                 (x = e),
                                 typeof getApp == Bk(146) + x(499) + "on")
                               ) {
-                                r["next"] = 6;
+                                r[B(443) + "t"] = 6;
                                 break;
                               }
-                              return r["abrupt"](
-                                "return",
+                              return r["abr" + B(612)](
+                                B(219) + D(135),
                                 Gk({ signType: f, signVersion: o })
                               );
                             case 6:
-                              return r["abrupt"]("break", 12);
+                              return r[B(526) + D(164)](D(127) + "ak", 12);
                             case 7:
                               if (Nk()) {
                                 r.next = 9;
                                 break;
                               }
-                              return r["abrupt"](
-                                "return",
+                              return r[B(526) + D(164)](
+                                D(136) + D(135),
                                 Gk({ signType: f, signVersion: o })
                               );
                             case 9:
-                              return r["abrupt"]("break", 12);
+                              return r[B(526) + D(164)](D(127) + "ak", 12);
                             case 10:
-                              return r["abrupt"]("break", 12);
+                              return r[D(109) + D(164)](D(127) + "ak", 12);
                             case 11:
-                              return r["abrupt"](
-                                "return",
+                              return r[D(109) + D(164)](
+                                D(136) + D(135),
                                 Gk({ signType: f, signVersion: o })
                               );
                             case 12:
                               if (
-                                ((v = (s || new Date()["getTime"]() + u) + ""),
+                                ((v =
+                                  (s ||
+                                    new Date()[D(155) + B(272) + "e"]() + u) +
+                                  ""),
                                 (Z = void 0),
                                 (O = void 0),
                                 (R = void 0),
@@ -27734,17 +26295,92 @@
                                 (r.t1 = b),
                                 r.t1)
                               ) {
-                                r["next"] = 20;
+                                r[D(128) + "t"] = 20;
                                 break;
                               }
-                              return (r["next"] = 18), h();
+                              return (r[D(128) + "t"] = 18), h();
                             case 18:
-                              (r.t2 = m), (r.t1 = r["sent"][r.t2]);
+                              (r.t2 = m), (r.t1 = r[D(108) + "t"][r.t2]);
                             case 20:
-                              return sign(r, D, gm, B);
+                              return (
+                                (k = r.t1),
+                                (g = fk(t)),
+                                (w = Qk(
+                                  Qk(
+                                    {},
+                                    gm[D(171) + "se"](
+                                      g[D(181) + "ry"][D(143) + D(142) + "e"](
+                                        /^\?/,
+                                        ""
+                                      ),
+                                      {
+                                        parseNumbers: !1,
+                                        arrayFormat: "bra" + D(110) + "t",
+                                      }
+                                    )
+                                  ),
+                                  gm[D(171) + "se"](
+                                    gm[D(146) + D(170) + B(676)](p || {}, {
+                                      strict: !1,
+                                      arrayFormat: D(125) + D(110) + "t",
+                                    }),
+                                    { arrayFormat: D(125) + D(110) + "t" }
+                                  )
+                                )),
+                                (y = gm["str" + B(245) + B(676)](
+                                  st(w)[D(145) + D(137)](function (r, e) {
+                                    var a = B,
+                                      t = D,
+                                      n = w[e];
+                                    return (
+                                      Array[t(163) + t(153) + "y"](n) &&
+                                        (n = km(n)[a(509) + "l"](n, Uk)),
+                                      (r[e] = n),
+                                      r
+                                    );
+                                  }, {}),
+                                  {
+                                    arrayFormat: B(611) + B(256) + "t",
+                                    strict: !1,
+                                    sort: Uk,
+                                  }
+                                )),
+                                (E = c || ""),
+                                (I = g[D(132) + "h"] + g[B(523) + "e"]),
+                                (C =
+                                  I +
+                                  ((V = void 0),
+                                  (V = n),
+                                  (_ = y)
+                                    ? _[V(150) + "it"]("&")[V(145) + V(137)](
+                                        function (r, e, a) {
+                                          var t = Bv(e[l(476) + "it"]("="), 2),
+                                            n = t[0],
+                                            i = t[1];
+                                          return (
+                                            r +
+                                            (a > 0 ? "&" : "") +
+                                            (n = encodeURIComponent(n)) +
+                                            "=" +
+                                            (i || "")
+                                          );
+                                        },
+                                        ""
+                                      )
+                                    : "") +
+                                  E +
+                                  v),
+                                r[D(109) + D(164)](B(219) + D(135), {
+                                  "X-Request-Sign": Gm(Um(k, C)),
+                                  "X-Request-Timestamp": v,
+                                  "X-Request-Package-Sign-Version": o,
+                                  "X-Request-Sign-Version": "v1",
+                                  "X-Request-Sign-Type": f,
+                                })
+                              );
                             case 28:
-                            case "end":
-                              return r["stop"]();
+                            case D(115):
+                              return r[D(123) + "p"]();
                           }
                       }, r);
                     })
@@ -27850,21 +26486,14 @@
                       for (var A = l, o = i; ; )
                         switch ((r[o(302) + "v"] = r[o(311) + "t"])) {
                           case 0:
-                            return (
-                              (r[A(564) + "v"] = 0),
-                              (r[o(311) + "t"] = 3),
-                              Eg(
-                                o(320) +
-                                  o(296) +
-                                  o(322) +
-                                  o(293) +
-                                  o(351) +
-                                  o(339) +
-                                  o(333) +
-                                  o(348) +
-                                  "ow"
-                              )
-                            );
+                            r[A(564) + "v"] = 0;
+                            r[o(311) + "t"] = 3;
+                            return {
+                              code: 0,
+                              data: {
+                                timestamp: Date.now(),
+                              },
+                            };
                           case 3:
                             (e = r[A(736) + "t"]),
                               (a = e[o(314) + "a"]),
@@ -29579,7 +28208,8 @@
                         (n = e.map(function (r) {
                           return nr(r, t);
                         })),
-                        (r.next = 5)
+                        (r.next = 5),
+                        ar({ url: "/collect", method: "post", data: n })
                       );
                     case 5:
                     case "end":
@@ -29621,18 +28251,25 @@
                 var r = this;
                 L("__mtma", 63072e6), L("__mtmb", 72e5);
                 var e = p("UBT_STACK");
-                e && (this.stack = e),
-                  ar({ url: "/config", method: "get" }).then(function (e) {
-                    var a = e.data;
-                    (r.enabled = a.enabled),
-                      (r.batchCount = a.batch_count),
-                      (r.minInterval = 1e3 * a.min_interval),
-                      (r.maxInterval = 1e3 * a.max_interval);
-                  }),
-                  this.report("launch", {
-                    target: "launch",
-                    value: JSON.stringify({ path: window.location.href }),
-                  });
+                e && (this.stack = e);
+                var a = {
+                  enabled: true,
+                  min_interval: 2,
+                  max_interval: 300,
+                  batch_count: 1,
+                  min_level: 2,
+                  wifi_only: false,
+                  max_stale: 5,
+                  file_max_size: 20,
+                };
+                (r.enabled = a.enabled),
+                  (r.batchCount = a.batch_count),
+                  (r.minInterval = 1e3 * a.min_interval),
+                  (r.maxInterval = 1e3 * a.max_interval);
+                this.report("launch", {
+                  target: "launch",
+                  value: JSON.stringify({ path: window.location.href }),
+                });
                 var a = function (e) {
                     var a = r;
                     K(e) &&
@@ -29688,9 +28325,6 @@
                   attributeOldValue: !0,
                   characterDataOldValue: !0,
                 }),
-                  setInterval(function () {
-                    return r.heartbeat();
-                  }, 6e4),
                   this.report("change", {
                     target: "Page Visibility",
                     key: "hidden => visible",
@@ -29714,114 +28348,31 @@
             },
             {
               key: "flush",
-              value: function (r) {
-                var e = this,
-                  a = r || Date.now();
-                return (this.stack.length + 1 >= this.batchCount ||
-                  a - this.lastReportedAt >= this.maxInterval) &&
-                  !this.reporting
-                  ? (this.send(), !0)
-                  : (this.flushTimer ||
-                      (this.flushTimer = setTimeout(function () {
-                        (e.flushTimer = null), e.flush();
-                      }, 1e3)),
-                    !1);
-              },
+              value: function (r) {},
             },
             {
               key: "send",
-              value: (function () {
-                var r = e(
-                  regeneratorRuntime.mark(function r() {
-                    var e;
-                    return regeneratorRuntime.wrap(
-                      function (r) {
-                        while (1)
-                          switch ((r.prev = r.next)) {
-                            case 0:
-                              if (!(this.stack.length <= 0)) {
-                                r.next = 2;
-                                break;
-                              }
-                              return r.abrupt("return");
-                            case 2:
-                              return (
-                                (e = this.stack),
-                                (this.reporting = !0),
-                                (this.stack = []),
-                                m("UBT_STACK"),
-                                (r.prev = 6),
-                                (r.next = 9),
-                                ir(e, {
-                                  sessionId: this.sessionId,
-                                  packageId: this.packageId,
-                                  userId: this.userId,
-                                  openId: this.openId,
-                                })
-                              );
-                            case 9:
-                              this.isDebug && console.log("UBT_STACK", e),
-                                (this.lastReportedAt = new Date().valueOf()),
-                                (r.next = 18);
-                              break;
-                            case 13:
-                              (r.prev = 13),
-                                (r.t0 = r["catch"](6)),
-                                console.log("error", r.t0),
-                                (this.stack = [].concat(f(e), f(this.stack))),
-                                v("UBT_STACK", this.stack);
-                            case 18:
-                              this.reporting = !1;
-                            case 19:
-                            case "end":
-                              return r.stop();
-                          }
-                      },
-                      r,
-                      this,
-                      [[6, 13]]
-                    );
-                  })
-                );
-                function a() {
-                  return r.apply(this, arguments);
-                }
-                return a;
-              })(),
+              value: (function () {})(),
             },
             {
               key: "heartbeat",
-              value: function () {
-                this.report("heartbeat", { target: y() || "heartbeat" });
-              },
+              value: function () {},
             },
             {
               key: "reportPv",
-              value: function () {
-                this.report("pv");
-              },
+              value: function () {},
             },
             {
               key: "reportClick",
-              value: function (r, e) {
-                var a = e.key,
-                  t = e.value;
-                this.report("click", { target: r, key: a, value: t });
-              },
+              value: function (r, e) {},
             },
             {
               key: "reportTiming",
-              value: function (r) {
-                this.report("timing", r);
-              },
+              value: function (r) {},
             },
             {
               key: "reportExpose",
-              value: function (r, e) {
-                var a = e.key,
-                  t = e.value;
-                this.report("expose", { target: r, key: a, value: t });
-              },
+              value: function (r, e) {},
             },
           ]),
           r
@@ -30005,9 +28556,7 @@
       return i(c, r) || (c[r] = o && i(u, r) ? u[r] : l("Symbol." + r)), c[r];
     };
   },
-  b639: function (r, e, a) {
-    r.exports = a("046e")(54);
-  },
+  b639: function (r, e, a) {},
   b6b4: function (r, e, a) {
     (function (t, n) {
       var i, A, o;
@@ -36397,7 +34946,6 @@
                             case 18:
                               (e.t2 = m), (e.t1 = e[x(261) + "t"][e.t2]);
                             case 20:
-                              console.log(jm, Qm);
                               return (
                                 (g = e.t1),
                                 (w = Ak(t)),
@@ -36562,21 +35110,12 @@
                     for (var A = f, o = i; ; )
                       switch ((r[A(841) + "v"] = r[A(951) + "t"])) {
                         case 0:
-                          return (
-                            (r[o(159) + "v"] = 0),
-                            (r[o(195) + "t"] = 3),
-                            mg(
-                              o(209) +
-                                o(156) +
-                                o(178) +
-                                o(189) +
-                                o(203) +
-                                "nda" +
-                                A(686) +
-                                o(161) +
-                                "ow"
-                            )
-                          );
+                          r[o(159) + "v"] = 0;
+                          r[o(195) + "t"] = 3;
+                          return {
+                            code: 0,
+                            data: { timestamp: Date.now() },
+                          };
                         case 3:
                           (e = r.sent),
                             (a = e[A(442) + "a"]),
@@ -37063,9 +35602,7 @@
       A = t[i] || n(i, {});
     r.exports = A;
   },
-  c8ba: function (r, e, a) {
-    r.exports = a("046e")(8);
-  },
+  c8ba: function (r, e, a) {},
   ca84: function (r, e, a) {
     var t = a("e330"),
       n = a("1a2d"),
@@ -41422,7 +39959,8 @@ PERFORMANCE OF THIS SOFTWARE.
             });
       else if (Object(n["d"])()) t["a"].login();
       else {
-        const e = Object(i["b"])() + "" + r,
+        const e =
+            Object(i["b"])() + "" + r + "&pkg=" + A["a"].state.app.puppet.id,
           a =
             "https://m.qiandaoapp.com/assist/#/login?redirectUrl=" +
             encodeURIComponent(e);
