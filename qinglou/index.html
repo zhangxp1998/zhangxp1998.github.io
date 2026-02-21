@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剧本机制流程管理工具</title>
+    <!-- 引入 Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        [v-cloak] { display: none; }
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen pb-10">
+    <div id="app" v-cloak class="max-w-7xl mx-auto pt-6 px-4 space-y-6">
+        
+        <!-- Header -->
+        <header class="bg-white shadow-md rounded-lg p-5 flex flex-col md:flex-row justify-between items-center gap-4 border-t-4 border-indigo-600">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <span>📜</span> 机制流程管理大屏
+                </h1>
+                <p class="text-sm text-slate-500 mt-1">记录宝藏、搜证路线、暗杀防具与结算</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button @click="currentTab = 'setup'" :class="{'bg-indigo-600 text-white': currentTab==='setup', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='setup'}" class="px-5 py-2 rounded-md font-medium transition-colors">⚙️ 基础设置</button>
+                <button @click="currentTab = 'treasures'" :class="{'bg-indigo-600 text-white': currentTab==='treasures', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='treasures'}" class="px-5 py-2 rounded-md font-medium transition-colors">💎 宝藏设置</button>
+                <button @click="currentTab = 'rounds'" :class="{'bg-indigo-600 text-white': currentTab==='rounds', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='rounds'}" class="px-5 py-2 rounded-md font-medium transition-colors">⚔️ 轮次面板</button>
+                <button @click="currentTab = 'dashboard'" :class="{'bg-indigo-600 text-white': currentTab==='dashboard', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='dashboard'}" class="px-5 py-2 rounded-md font-medium transition-colors">📊 状态总览</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="bg-white shadow-md rounded-lg p-6 min-h-[600px] border border-slate-200">
+            
+            <!-- Tab: Setup -->
+            <transition name="fade" mode="out-in">
+                <div v-if="currentTab === 'setup'" key="setup" class="space-y-8">
+                    <h2 class="text-xl font-bold border-b pb-2 text-indigo-700">基础设置</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- 角色管理 -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold flex items-center gap-2">👥 角色列表</h3>
+                            <div class="flex gap-2">
+                                <input v-model="newCharacterName" @keyup.enter="addCharacter" type="text" placeholder="输入角色名称" class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <button @click="addCharacter" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">添加</button>
+                            </div>
+                            <ul class="space-y-2">
+                                <li v-for="(char, index) in characters" :key="char.id" class="flex justify-between items-center bg-slate-50 p-3 rounded border">
+                                    <span class="font-medium">{{ char.name }}</span>
+                                    <button @click="removeCharacter(index)" class="text-red-500 hover:text-red-700 text-sm">删除</button>
+                                </li>
+                            </ul>
+                            <p v-if="characters.length === 0" class="text-slate-400 text-sm text-center py-4">暂无角色，请添加</p>
+                        </div>
+
+                        <!-- 地点管理 -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold flex items-center gap-2">📍 物品搜索</h3>
+                            <div class="flex gap-2">
+                                <input v-model="newLocationName" @keyup.enter="addLocation" type="text" placeholder="输入地点名称" class="flex-1 border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                <button @click="addLocation" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">添加</button>
+                            </div>
+                            <ul class="space-y-2">
+                                <li v-for="(loc, index) in locations" :key="index" class="flex justify-between items-center bg-slate-50 p-3 rounded border">
+                                    <span class="font-medium">{{ loc }}</span>
+                                    <button @click="removeLocation(index)" class="text-red-500 hover:text-red-700 text-sm">删除</button>
+                                </li>
+                            </ul>
+                            <p v-if="locations.length === 0" class="text-slate-400 text-sm text-center py-4">暂无地点，请添加</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Treasures -->
+                <div v-else-if="currentTab === 'treasures'" key="treasures" class="space-y-6">
+                    <h2 class="text-xl font-bold border-b pb-2 text-indigo-700 flex justify-between items-center">
+                        <span>💎 宝藏位置记录</span>
+                        <span class="text-sm font-normal text-slate-500">记录开局各地点隐藏了哪些宝物/防具</span>
+                    </h2>
+
+                    <div v-if="locations.length === 0" class="text-center py-10 text-slate-500">
+                        请先在“基础设置”中添加物品搜索。
+                    </div>
+
+                    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div v-for="loc in locations" :key="loc" class="border rounded-lg p-4 bg-slate-50 shadow-sm">
+                            <h3 class="font-bold text-lg mb-3 text-slate-800 border-b pb-1">{{ loc }}</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-medium text-slate-600 w-8">上:</span>
+                                    <input v-model="treasures[loc].up" type="text" placeholder="空" class="flex-1 border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    <button @click="treasures[loc].up = ''" class="text-red-500 hover:text-red-700 text-xl leading-none" title="清空">×</button>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-medium text-slate-600 w-8">下:</span>
+                                    <input v-model="treasures[loc].down" type="text" placeholder="空" class="flex-1 border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    <button @click="treasures[loc].down = ''" class="text-red-500 hover:text-red-700 text-xl leading-none" title="清空">×</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Rounds -->
+                <div v-else-if="currentTab === 'rounds'" key="rounds" class="space-y-6">
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <h2 class="text-xl font-bold text-indigo-700">⚔️ 轮次面板</h2>
+                        <div class="space-x-2">
+                            <span class="font-bold text-lg mr-4">当前轮次: 第 {{ currentRoundNumber }} 轮</span>
+                            <button @click="prevRound" :disabled="currentRoundNumber <= 1" class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50">上一轮</button>
+                            <button @click="nextRound" class="px-3 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">下一轮 / 新增</button>
+                        </div>
+                    </div>
+
+                    <div v-if="characters.length === 0" class="text-center py-10 text-slate-500">
+                        请先在“基础设置”中添加角色。
+                    </div>
+                    <div v-else class="space-y-8">
+                        
+                        <!-- 搜证记录 -->
+                        <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-100">
+                            <h3 class="font-bold text-lg mb-4 text-indigo-800 flex items-center gap-2">🔍 搜证阶段记录</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left bg-white rounded shadow-sm">
+                                    <thead class="bg-indigo-100 text-indigo-800">
+                                        <tr>
+                                            <th class="p-3 w-1/5">角色</th>
+                                            <th class="p-3 w-1/5">物品搜索</th>
+                                            <th class="p-3 w-2/5">获得物品 (逗号分隔)</th>
+                                            <th class="p-3 w-1/5 text-center">开启宝箱所需银两</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="char in characters" :key="char.id" class="border-t" :class="{'bg-red-50': isDeadBeforeCurrentRound(char)}">
+                                            <td class="p-3 font-medium flex items-center gap-2">
+                                                <span>{{ char.name }}</span>
+                                                <span v-if="isDeadBeforeCurrentRound(char)" class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">已死亡</span>
+                                            </td>
+                                            <td class="p-3">
+                                                <div class="space-y-2">
+                                                    <select v-model="currentRoundData.searches[char.id].location" @change="onSearchLocationChange(char.id, 1)" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
+                                                        <option value="">-- 未搜索 --</option>
+                                                        <optgroup v-for="loc in locations" :key="loc" :label="loc">
+                                                            <option :value="loc + ' - 上'">{{ loc }} - 上 ({{ getAvailableItemText(loc + ' - 上', char.id, 1) }})</option>
+                                                            <option :value="loc + ' - 下'">{{ loc }} - 下 ({{ getAvailableItemText(loc + ' - 下', char.id, 1) }})</option>
+                                                        </optgroup>
+                                                    </select>
+                                                    <select v-if="char.maxSearches > 1" v-model="currentRoundData.searches[char.id].location2" @change="onSearchLocationChange(char.id, 2)" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
+                                                        <option value="">-- 未搜索 --</option>
+                                                        <optgroup v-for="loc in locations" :key="loc" :label="loc">
+                                                            <option :value="loc + ' - 上'">{{ loc }} - 上 ({{ getAvailableItemText(loc + ' - 上', char.id, 2) }})</option>
+                                                            <option :value="loc + ' - 下'">{{ loc }} - 下 ({{ getAvailableItemText(loc + ' - 下', char.id, 2) }})</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td class="p-3">
+                                                <div class="space-y-2">
+                                                    <input v-model="currentRoundData.searches[char.id].items" :disabled="isDeadBeforeCurrentRound(char)" type="text" placeholder="例如: 毒药, 银票" class="w-full border rounded px-2 py-1 disabled:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                                    <input v-if="char.maxSearches > 1" v-model="currentRoundData.searches[char.id].items2" :disabled="isDeadBeforeCurrentRound(char)" type="text" placeholder="例如: 毒药, 银票" class="w-full border rounded px-2 py-1 disabled:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                                                </div>
+                                            </td>
+                                            <td class="p-3 text-center">
+                                                <div class="space-y-2 text-sm text-amber-600 font-bold">
+                                                    <div class="h-8 leading-8">{{ getItemCostText(currentRoundData.searches[char.id].items) }}</div>
+                                                    <div v-if="char.maxSearches > 1" class="h-8 leading-8">{{ getItemCostText(currentRoundData.searches[char.id].items2) }}</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 暗杀与结算 -->
+                        <div class="bg-red-50 p-5 rounded-lg border border-red-100">
+                            <h3 class="font-bold text-lg mb-4 text-red-800 flex items-center gap-2">🗡️ 暗杀与防具结算</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left bg-white rounded shadow-sm mb-4">
+                                    <thead class="bg-red-100 text-red-800">
+                                        <tr>
+                                            <th class="p-3 w-1/5">行动角色</th>
+                                            <th class="p-3 w-1/5">暗杀目标</th>
+                                            <th class="p-3 w-1/5">使用武器</th>
+                                            <th class="p-3 w-1/5 text-center">目标是否使用防具?</th>
+                                            <th class="p-3 w-1/5 text-center">系统判定结果</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="char in characters" :key="char.id" class="border-t" :class="{'bg-slate-50 opacity-50': isDeadBeforeCurrentRound(char)}">
+                                            <td class="p-3 font-medium">{{ char.name }}</td>
+                                            <td class="p-3">
+                                                <div class="space-y-2">
+                                                    <select v-model="currentRoundData.assassinations[char.id].target" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
+                                                        <option value="">-- 无动作 --</option>
+                                                        <option v-for="target in characters.filter(c => c.id !== char.id)" :key="target.id" :value="target.id">
+                                                            {{ target.name }} {{ isDeadBeforeCurrentRound(target) ? '(尸体)' : '' }}
+                                                        </option>
+                                                    </select>
+                                                    <select v-if="char.maxAssassinations > 1" v-model="currentRoundData.assassinations[char.id].target2" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
+                                                        <option value="">-- 无动作 --</option>
+                                                        <option v-for="target in characters.filter(c => c.id !== char.id && c.id !== currentRoundData.assassinations[char.id].target)" :key="target.id" :value="target.id">
+                                                            {{ target.name }} {{ isDeadBeforeCurrentRound(target) ? '(尸体)' : '' }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td class="p-3">
+                                                <div class="space-y-2">
+                                                    <select v-model="currentRoundData.assassinations[char.id].weapon" :disabled="!currentRoundData.assassinations[char.id].target || isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
+                                                        <option value="">-- 选择武器 --</option>
+                                                        <option v-for="item in allFoundWeapons" :key="item" :value="item" :disabled="!isWeaponAvailable(item, char.id)">
+                                                            {{ item }} {{ !isWeaponAvailable(item, char.id) ? '(已被他人使用)' : '' }}
+                                                        </option>
+                                                    </select>
+                                                    <select v-if="char.maxAssassinations > 1" v-model="currentRoundData.assassinations[char.id].weapon2" :disabled="!currentRoundData.assassinations[char.id].target2 || isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
+                                                        <option value="">-- 选择武器 --</option>
+                                                        <option v-for="item in allFoundWeapons" :key="item" :value="item" :disabled="!isWeaponAvailable(item, char.id)">
+                                                            {{ item }} {{ !isWeaponAvailable(item, char.id) ? '(已被他人使用)' : '' }}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td class="p-3 text-center">
+                                                <div class="space-y-2 flex flex-col items-center">
+                                                    <select v-if="currentRoundData.assassinations[char.id].target" v-model="currentRoundData.assassinations[char.id].targetArmor" class="w-full border rounded px-2 py-1 bg-white h-7 text-sm">
+                                                        <option value="">-- 无防具 --</option>
+                                                        <optgroup label="免死防具">
+                                                            <option v-for="armor in allFoundArmors.lifeSaving" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 1)">
+                                                                {{ armor }} {{ !isArmorAvailable(armor, char.id, 1) ? '(已被用掉)' : '' }}
+                                                            </option>
+                                                        </optgroup>
+                                                        <optgroup label="防伤防具">
+                                                            <option v-for="armor in allFoundArmors.damagePreventing" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 1)">
+                                                                {{ armor }} {{ !isArmorAvailable(armor, char.id, 1) ? '(已被用掉)' : '' }}
+                                                            </option>
+                                                        </optgroup>
+                                                    </select>
+                                                    <span v-else class="text-slate-400 text-sm block h-7 leading-7">-</span>
+                                                    
+                                                    <template v-if="char.maxAssassinations > 1">
+                                                        <select v-if="currentRoundData.assassinations[char.id].target2" v-model="currentRoundData.assassinations[char.id].target2Armor" class="w-full border rounded px-2 py-1 bg-white h-7 mt-2 text-sm">
+                                                            <option value="">-- 无防具 --</option>
+                                                            <optgroup label="免死防具">
+                                                                <option v-for="armor in allFoundArmors.lifeSaving" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 2)">
+                                                                    {{ armor }} {{ !isArmorAvailable(armor, char.id, 2) ? '(已被用掉)' : '' }}
+                                                                </option>
+                                                            </optgroup>
+                                                            <optgroup label="防伤防具">
+                                                                <option v-for="armor in allFoundArmors.damagePreventing" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 2)">
+                                                                    {{ armor }} {{ !isArmorAvailable(armor, char.id, 2) ? '(已被用掉)' : '' }}
+                                                                </option>
+                                                            </optgroup>
+                                                        </select>
+                                                        <span v-else class="text-slate-400 text-sm block h-7 mt-2 leading-7">-</span>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                            <td class="p-3 text-center">
+                                                <div class="space-y-2">
+                                                    <span v-if="currentRoundData.assassinations[char.id].target && currentRoundData.assassinations[char.id].weapon" class="block h-7 leading-7">
+                                                        <span v-if="!checkAssassinationResult(currentRoundData.assassinations[char.id].weapon, currentRoundData.assassinations[char.id].targetArmor)" class="text-blue-600 font-bold text-sm">🛡️ 防御</span>
+                                                        <span v-else class="text-red-600 font-bold text-sm">💀 击杀</span>
+                                                    </span>
+                                                    <span v-else class="block h-7"></span>
+
+                                                    <template v-if="char.maxAssassinations > 1">
+                                                        <span v-if="currentRoundData.assassinations[char.id].target2 && currentRoundData.assassinations[char.id].weapon2" class="block h-7 mt-2 leading-7">
+                                                            <span v-if="!checkAssassinationResult(currentRoundData.assassinations[char.id].weapon2, currentRoundData.assassinations[char.id].target2Armor)" class="text-blue-600 font-bold text-sm">🛡️ 防御</span>
+                                                            <span v-else class="text-red-600 font-bold text-sm">💀 击杀</span>
+                                                        </span>
+                                                        <span v-else class="block h-7 mt-2"></span>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <p class="text-right text-xs text-red-500 mt-2">* 所有暗杀行为与防具判定均会实时自动结算，无需手动点击。</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tab: Dashboard -->
+                <div v-else-if="currentTab === 'dashboard'" key="dashboard" class="space-y-6">
+                    <h2 class="text-xl font-bold border-b pb-2 text-indigo-700 flex justify-between items-center">
+                        <span>📊 状态总览</span>
+                        <button @click="resetGame" class="text-sm bg-slate-200 text-slate-700 px-3 py-1 rounded hover:bg-slate-300 transition-colors">重置全盘游戏</button>
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div v-for="char in characters" :key="char.id" 
+                             class="border rounded-xl p-5 shadow-sm relative overflow-hidden transition-all"
+                             :class="char.isAlive ? 'bg-white border-green-200' : 'bg-slate-100 border-red-200'">
+                            
+                            <!-- 存活状态角标 -->
+                            <div v-if="char.isAlive" class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">存活</div>
+                            <div v-else class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">死亡</div>
+
+                            <h3 class="font-bold text-xl mb-1 flex items-center gap-2">
+                                <span>{{ char.name }}</span>
+                                <span v-if="!char.isAlive" class="text-xl">👻</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 mb-4 border-b pb-2">最后结算于第 {{ char.lastUpdateRound || 0 }} 轮</p>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <h4 class="text-sm font-semibold text-slate-700 mb-1 flex items-center gap-1">🎒 持有物品 (搜证累积)</h4>
+                                    <div class="flex flex-wrap gap-1">
+                                        <span v-for="(item, idx) in calculateCharacterItems(char.id)" :key="idx" class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded border border-indigo-200">
+                                            {{ item }}
+                                        </span>
+                                        <span v-if="calculateCharacterItems(char.id).length === 0" class="text-sm text-slate-400">暂无物品</span>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="text-sm font-semibold text-slate-700 mb-1 flex items-center gap-1">📍 搜证轨迹</h4>
+                                    <div class="text-sm text-slate-600 leading-relaxed">
+                                        <div v-for="r in rounds" :key="r.id">
+                                            <span v-if="r.searches[char.id] && r.searches[char.id].location" class="block">
+                                                <span class="text-xs font-bold text-slate-400">R{{ r.id }}:</span>前往 [{{ r.searches[char.id].location }}]
+                                            </span>
+                                        </div>
+                                        <span v-if="rounds.every(r => !r.searches[char.id] || !r.searches[char.id].location)" class="text-slate-400">无搜证记录</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </main>
+    </div>
+
+    <script>
+        const { createApp, ref, computed, reactive, watch, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                // UI 状态
+                const currentTab = ref('setup');
+
+                // 基础数据
+                const characters = ref([]);
+                const nextCharId = ref(1);
+                const newCharacterName = ref('');
+
+                const locations = ref([]);
+                const newLocationName = ref('');
+
+                const treasures = ref({}); // { '地点': { up: '物品1', down: '物品2' } }
+
+                // 轮次数据
+                const rounds = ref([]);
+                const currentRoundNumber = ref(1);
+
+                // --- 本地存储逻辑 (页面刷新不丢数据) ---
+                const saveData = () => {
+                    const data = {
+                        characters: characters.value,
+                        nextCharId: nextCharId.value,
+                        locations: locations.value,
+                        treasures: treasures.value,
+                        rounds: rounds.value,
+                        currentRoundNumber: currentRoundNumber.value
+                    };
+                    localStorage.setItem('qinglou_data_v14', JSON.stringify(data));
+                };
+
+                const loadData = () => {
+                    const data = localStorage.getItem('qinglou_data_v14');
+                    if (data) {
+                        try {
+                            const parsed = JSON.parse(data);
+                            characters.value = parsed.characters || [];
+                            nextCharId.value = parsed.nextCharId || 1;
+                            locations.value = parsed.locations || [];
+                            treasures.value = parsed.treasures || {};
+                            rounds.value = parsed.rounds || [];
+                            currentRoundNumber.value = parsed.currentRoundNumber || 1;
+                        } catch (e) {
+                            console.error('Failed to parse local storage data');
+                        }
+                    } else {
+                        // 初始默认数据
+                        characters.value = [
+                            { id: 1, name: '陈一兔', isAlive: true, deathRound: null, lastUpdateRound: 0, initialItems: '月兔', maxSearches: 1, maxAssassinations: 1, extraLife: 0 },
+                            { id: 2, name: '姜红儿', isAlive: true, deathRound: null, lastUpdateRound: 0, initialItems: '', maxSearches: 1, maxAssassinations: 1, extraLife: 0 },
+                            { id: 3, name: '莫怀', isAlive: true, deathRound: null, lastUpdateRound: 0, initialItems: '逐玉剑', maxSearches: 1, maxAssassinations: 1, extraLife: 0 },
+                            { id: 4, name: '舒悦', isAlive: true, deathRound: null, lastUpdateRound: 0, initialItems: '紫萝裳', maxSearches: 1, maxAssassinations: 1, extraLife: 0 },
+                            { id: 5, name: '白斋子', isAlive: true, deathRound: null, lastUpdateRound: 0, initialItems: '', maxSearches: 1, maxAssassinations: 1, extraLife: 0 },
+                            { id: 6, name: '齐剑心', isAlive: true, deathRound: null, lastUpdateRound: 0, initialItems: '', maxSearches: 1, maxAssassinations: 2, extraLife: 1 },
+                            { id: 7, name: '杜霄元', isAlive: true, deathRound: null, lastUpdateRound: 0, initialItems: '', maxSearches: 2, maxAssassinations: 1, extraLife: 0 }
+                        ];
+                        nextCharId.value = 8;
+                        locations.value = ['大牢一', '大牢二', '大牢三', '大牢四', '大牢五', '大牢六', '墙壁一', '墙壁二', '灵石', '监狱入口'];
+                        const defaultTreasures = {
+                            '大牢一': { up: '银两200', down: '银剑' },
+                            '大牢二': { up: '碧霞衣', down: '银两200' },
+                            '大牢三': { up: '金剑', down: '木衣' },
+                            '大牢四': { up: '银两200', down: '五朝服' },
+                            '大牢五': { up: '水衣', down: '土衣' },
+                            '大牢六': { up: '银两200', down: '银两200' },
+                            '墙壁一': { up: '银两200', down: '电衣' },
+                            '墙壁二': { up: '混元剑', down: '银两200' },
+                            '灵石': { up: '银两200', down: '金衣' },
+                            '监狱入口': { up: '火衣', down: '银两200' }
+                        };
+                        locations.value.forEach(loc => { treasures.value[loc] = defaultTreasures[loc] || { up: '', down: '' }; });
+                        initRound(1);
+                    }
+                };
+
+                // 在组件挂载时读取数据
+                onMounted(() => {
+                    loadData();
+                });
+
+                // ---------------------------------
+
+                // --- 基础设置逻辑 ---
+                const addCharacter = () => {
+                    if (newCharacterName.value.trim()) {
+                        characters.value.push({
+                            id: nextCharId.value++,
+                            name: newCharacterName.value.trim(),
+                            isAlive: true,
+                            deathRound: null,
+                            lastUpdateRound: 0,
+                            initialItems: '',
+                            maxSearches: 1,
+                            maxAssassinations: 1,
+                            extraLife: 0
+                        });
+                        newCharacterName.value = '';
+                        ensureRoundDataStructures();
+                    }
+                };
+                const removeCharacter = (index) => {
+                    if (confirm('确定删除该角色吗？会影响历史轮次记录！')) {
+                        characters.value.splice(index, 1);
+                    }
+                };
+
+                const addLocation = () => {
+                    const loc = newLocationName.value.trim();
+                    if (loc && !locations.value.includes(loc)) {
+                        locations.value.push(loc);
+                        treasures.value[loc] = { up: '', down: '' };
+                        newLocationName.value = '';
+                    }
+                };
+                const removeLocation = (index) => {
+                    const loc = locations.value[index];
+                    if (confirm(`确定删除地点 "${loc}" 吗？这会清除该地点的宝藏记录。`)) {
+                        locations.value.splice(index, 1);
+                        delete treasures.value[loc];
+                    }
+                };
+
+                // --- 宝藏设置逻辑 ---
+                // (直接使用v-model绑定)
+
+                // --- 轮次逻辑 ---
+                const initRound = (roundNum) => {
+                    const existingRound = rounds.value.find(r => r.id === roundNum);
+                    if (!existingRound) {
+                        const newRound = { id: roundNum, searches: {}, assassinations: {}, settled: false };
+                        characters.value.forEach(c => {
+                            newRound.searches[c.id] = { location: '', items: '', location2: '', items2: '' };
+                            newRound.assassinations[c.id] = { target: '', weapon: '', targetHasArmor: false, target2: '', weapon2: '', target2HasArmor: false };
+                        });
+                        rounds.value.push(newRound);
+                    }
+                };
+
+                const ensureRoundDataStructures = () => {
+                    rounds.value.forEach(round => {
+                        characters.value.forEach(c => {
+                            if (!round.searches[c.id]) {
+                                round.searches[c.id] = { location: '', items: '', location2: '', items2: '' };
+                            } else if (round.searches[c.id].location2 === undefined) {
+                                round.searches[c.id].location2 = '';
+                                round.searches[c.id].items2 = '';
+                            }
+                            if (!round.assassinations[c.id]) {
+                                round.assassinations[c.id] = { target: '', weapon: '', targetArmor: '', target2: '', weapon2: '', target2Armor: '' };
+                            } else {
+                                if (round.assassinations[c.id].weapon === undefined) round.assassinations[c.id].weapon = '';
+                                if (round.assassinations[c.id].targetArmor === undefined) round.assassinations[c.id].targetArmor = '';
+                                if (round.assassinations[c.id].target2 === undefined) {
+                                    round.assassinations[c.id].target2 = '';
+                                    round.assassinations[c.id].weapon2 = '';
+                                    round.assassinations[c.id].target2Armor = '';
+                                }
+                                if (round.assassinations[c.id].target2Armor === undefined) round.assassinations[c.id].target2Armor = '';
+                            }
+                        });
+                    });
+                };
+
+                const prevRound = () => {
+                    if (currentRoundNumber.value > 1) {
+                        currentRoundNumber.value--;
+                    }
+                };
+
+                const nextRound = () => {
+                    currentRoundNumber.value++;
+                    initRound(currentRoundNumber.value);
+                };
+
+                const currentRoundData = computed(() => {
+                    let round = rounds.value.find(r => r.id === currentRoundNumber.value);
+                    if (!round) {
+                        // 防御性编程，不应该发生
+                        initRound(currentRoundNumber.value);
+                        round = rounds.value.find(r => r.id === currentRoundNumber.value);
+                    }
+                    return round;
+                });
+
+                // --- 自动结算逻辑 ---
+                const lifeSavingArmors = ['月兔', '紫萝裳', '彼岸花', '碧霞衣', '五朝服'];
+                const damagePreventingArmors = ['金衣', '木衣', '水衣', '火衣', '土衣', '电衣', '风衣', '雷衣'];
+                const fatalWeapons = ['逐玉剑', '混元剑'];
+                const damagingWeapons = ['金剑', '银剑', '铜剑'];
+                
+                const getItemCostText = (itemsString) => {
+                    if (!itemsString) return '-';
+                    const items = itemsString.split(/[,，]/).map(i => i.trim());
+                    let maxCost = 0;
+                    for (let item of items) {
+                        if (fatalWeapons.includes(item)) maxCost = Math.max(maxCost, 2000);
+                        else if (lifeSavingArmors.includes(item)) maxCost = Math.max(maxCost, 1000);
+                        else if (damagingWeapons.includes(item)) maxCost = Math.max(maxCost, 700);
+                        else if (damagePreventingArmors.includes(item)) maxCost = Math.max(maxCost, 500);
+                    }
+                    return maxCost > 0 ? maxCost + ' 银两' : '-';
+                };
+                
+                const checkAssassinationResult = (weapon, armor) => {
+                    if (!weapon) return false; // 没武器杀不了人
+                    if (!armor) return true; // 没防具必死
+                    if (lifeSavingArmors.includes(armor)) return false; // 免死防具挡一切(或者至少挡致命和致伤)
+                    if (fatalWeapons.includes(weapon) && damagePreventingArmors.includes(armor)) return true; // 防伤防具挡不住致命武器
+                    if (damagePreventingArmors.includes(armor)) return false; // 防伤防具挡住致伤武器
+                    return true;
+                };
+
+                const autoSettle = () => {
+                    let statusMap = {};
+                    characters.value.forEach(c => {
+                        statusMap[c.id] = { isAlive: true, deathRound: null, lastUpdateRound: 0, extraLife: c.extraLife || 0 };
+                    });
+
+                    rounds.value.forEach(round => {
+                        Object.entries(round.assassinations).forEach(([actorId, action]) => {
+                            const processTarget = (targetId, weapon, armor) => {
+                                if (targetId && weapon) {
+                                    const targetStatus = statusMap[targetId];
+                                    const isKilled = checkAssassinationResult(weapon, armor);
+                                    if (targetStatus && targetStatus.isAlive && isKilled) {
+                                        if (targetStatus.extraLife > 0) {
+                                            targetStatus.extraLife--;
+                                            targetStatus.lastUpdateRound = round.id;
+                                        } else {
+                                            targetStatus.isAlive = false;
+                                            targetStatus.deathRound = round.id;
+                                            targetStatus.lastUpdateRound = round.id;
+                                        }
+                                    }
+                                }
+                            };
+                            processTarget(action.target, action.weapon, action.targetArmor);
+                            processTarget(action.target2, action.weapon2, action.target2Armor);
+                        });
+
+                        characters.value.forEach(c => {
+                            if (round.searches[c.id]?.location || round.searches[c.id]?.items || 
+                                round.searches[c.id]?.location2 || round.searches[c.id]?.items2 ||
+                                round.assassinations[c.id]?.target || round.assassinations[c.id]?.target2) {
+                                if (statusMap[c.id].lastUpdateRound < round.id) {
+                                    statusMap[c.id].lastUpdateRound = round.id;
+                                }
+                            }
+                        });
+                    });
+
+                    characters.value.forEach(c => {
+                        const s = statusMap[c.id];
+                        if (c.isAlive !== s.isAlive) c.isAlive = s.isAlive;
+                        if (c.deathRound !== s.deathRound) c.deathRound = s.deathRound;
+                        if (c.lastUpdateRound !== s.lastUpdateRound) c.lastUpdateRound = s.lastUpdateRound;
+                    });
+                };
+
+                // --- 状态计算 ---
+                const calculateCharacterItems = (charId) => {
+                    let itemsList = [];
+                    const char = characters.value.find(c => c.id === charId);
+                    if (char && char.initialItems) {
+                        itemsList.push(...char.initialItems.split(/[,，]/).map(i => i.trim()).filter(i => i));
+                    }
+                    // 遍历所有轮次累加该角色的物品
+                    rounds.value.forEach(r => {
+                        const searchRecord = r.searches[charId];
+                        if (searchRecord && searchRecord.items) {
+                            const items = searchRecord.items.split(/[,，]/).map(i => i.trim()).filter(i => i);
+                            itemsList.push(...items);
+                        }
+                        if (searchRecord && searchRecord.items2) {
+                            const items2 = searchRecord.items2.split(/[,，]/).map(i => i.trim()).filter(i => i);
+                            itemsList.push(...items2);
+                        }
+                    });
+                    return itemsList;
+                };
+
+                // --- 防具与物品可用性逻辑 ---
+                const isWeaponAvailable = (weaponName, charId) => {
+                    if (!weaponName) return false;
+                    const round = currentRoundData.value;
+                    for (let c of characters.value) {
+                        if (c.id !== charId) {
+                            if (round.assassinations[c.id]?.weapon === weaponName) return false;
+                            if (round.assassinations[c.id]?.weapon2 === weaponName) return false;
+                        }
+                    }
+                    return true;
+                };
+
+                const isArmorAvailable = (armorName, checkCharId, checkActionIndex) => {
+                    if (!armorName) return false;
+                    
+                    for (let r of rounds.value) {
+                        for (let c of characters.value) {
+                            // 同一个动作自己选中的当然可用，不要被自己禁用
+                            if (r.id === currentRoundNumber.value && c.id === checkCharId) {
+                                if (checkActionIndex === 1 && r.assassinations[c.id]?.targetArmor === armorName) return true;
+                                if (checkActionIndex === 2 && r.assassinations[c.id]?.target2Armor === armorName) return true;
+                                // 但是如果第二动作正在查，且第一动作已经选了它，则不可用
+                                if (checkActionIndex === 2 && r.assassinations[c.id]?.targetArmor === armorName) return false;
+                                break; // 之后的不用查了
+                            }
+                            
+                            if (r.assassinations[c.id]?.targetArmor === armorName) return false;
+                            if (r.assassinations[c.id]?.target2Armor === armorName) return false;
+                            
+                            if (r.id === currentRoundNumber.value && c.id === checkCharId) {
+                                break;
+                            }
+                        }
+                        if (r.id === currentRoundNumber.value) break;
+                    }
+                    return true;
+                };
+
+                // --- 搜证自动填充逻辑 ---
+                const isDeadBeforeCurrentRound = (char) => {
+                    return char.deathRound !== null && char.deathRound < currentRoundNumber.value;
+                };
+
+                const isItemAvailable = (locSelection, checkRoundNum, checkCharId, checkSearchIndex) => {
+                    if (!locSelection) return false;
+                    
+                    // 检查之前的轮次
+                    for (let r of rounds.value) {
+                        if (r.id < checkRoundNum) {
+                            for (let c of characters.value) {
+                                if (r.searches[c.id]?.location === locSelection) return false;
+                                if (r.searches[c.id]?.location2 === locSelection) return false;
+                            }
+                        } else if (r.id === checkRoundNum) {
+                            // 检查当前轮次中排在 checkCharId 前面的人
+                            for (let c of characters.value) {
+                                if (c.id === checkCharId) {
+                                    // 到自己了，如果是第二次搜索，还要检查自己的第一次搜索
+                                    if (checkSearchIndex === 2 && r.searches[c.id]?.location === locSelection) return false;
+                                    break;
+                                }
+                                if (r.searches[c.id]?.location === locSelection) return false;
+                                if (r.searches[c.id]?.location2 === locSelection) return false;
+                            }
+                        }
+                    }
+                    return true;
+                };
+
+                const getAvailableItemText = (locSelection, charId, searchIndex = 1) => {
+                    if (!locSelection) return '空';
+                    const [loc, pos] = locSelection.split(' - ');
+                    const item = pos === '上' ? treasures.value[loc]?.up : treasures.value[loc]?.down;
+                    if (!item) return '空';
+                    
+                    if (isItemAvailable(locSelection, currentRoundNumber.value, charId, searchIndex)) {
+                        return item;
+                    } else {
+                        return '已空';
+                    }
+                };
+
+                const onSearchLocationChange = (charId, searchIndex = 1) => {
+                    const locSelection = searchIndex === 1 ? currentRoundData.value.searches[charId].location : currentRoundData.value.searches[charId].location2;
+                    if (locSelection) {
+                        if (isItemAvailable(locSelection, currentRoundNumber.value, charId, searchIndex)) {
+                            const [loc, pos] = locSelection.split(' - ');
+                            if (loc && pos) {
+                                const item = pos === '上' ? treasures.value[loc]?.up : treasures.value[loc]?.down;
+                                if (item) {
+                                    // 自动带入物品，如果原来已经有值了可以加逗号
+                                    const currentItems = searchIndex === 1 ? currentRoundData.value.searches[charId].items : currentRoundData.value.searches[charId].items2;
+                                    if (!currentItems) {
+                                        if (searchIndex === 1) currentRoundData.value.searches[charId].items = item;
+                                        else currentRoundData.value.searches[charId].items2 = item;
+                                    } else if (!currentItems.includes(item)) {
+                                        if (searchIndex === 1) currentRoundData.value.searches[charId].items = currentItems + ', ' + item;
+                                        else currentRoundData.value.searches[charId].items2 = currentItems + ', ' + item;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                const allFoundItems = computed(() => {
+                    let itemsSet = new Set(['彼岸花']); // 将NPC持有的彼岸花默认加入全局池
+                    characters.value.forEach(c => {
+                        if (c.initialItems) {
+                            c.initialItems.split(/[,，]/).map(i => i.trim()).filter(i => i).forEach(i => itemsSet.add(i));
+                        }
+                    });
+                    rounds.value.forEach(r => {
+                        if (r.id <= currentRoundNumber.value) {
+                            characters.value.forEach(c => {
+                                const searchRecord = r.searches[c.id];
+                                if (searchRecord && searchRecord.items) {
+                                    const items = searchRecord.items.split(/[,，]/).map(i => i.trim()).filter(i => i);
+                                    items.forEach(i => itemsSet.add(i));
+                                }
+                                if (searchRecord && searchRecord.items2) {
+                                    const items2 = searchRecord.items2.split(/[,，]/).map(i => i.trim()).filter(i => i);
+                                    items2.forEach(i => itemsSet.add(i));
+                                }
+                            });
+                        }
+                    });
+                    return Array.from(itemsSet);
+                });
+
+                const allFoundWeapons = computed(() => {
+                    return allFoundItems.value.filter(item => item.includes('剑'));
+                });
+
+                const allFoundArmors = computed(() => {
+                    return {
+                        lifeSaving: allFoundItems.value.filter(item => lifeSavingArmors.includes(item)),
+                        damagePreventing: allFoundItems.value.filter(item => damagePreventingArmors.includes(item))
+                    };
+                });
+
+                // --- 重置游戏 ---
+                const resetGame = () => {
+                    if (confirm('【危险操作】确定要重置所有游戏数据（包括所有轮次、所有角色、所有宝藏设置）吗？不可恢复！')) {
+                        localStorage.removeItem('qinglou_data_v14');
+                        location.reload();
+                    }
+                }
+
+                // 深度监听所有核心数据变化，保存到 localStorage
+                watch([characters, locations, treasures, rounds, currentRoundNumber], () => {
+                    autoSettle();
+                    saveData();
+                }, { deep: true });
+
+                return {
+                    currentTab,
+                    characters, newCharacterName, addCharacter, removeCharacter,
+                    locations, newLocationName, addLocation, removeLocation,
+                    treasures, 
+                    rounds, currentRoundNumber, prevRound, nextRound, currentRoundData,
+                    onSearchLocationChange, getAvailableItemText, isDeadBeforeCurrentRound,
+                    calculateCharacterItems, resetGame, allFoundItems, allFoundWeapons, allFoundArmors, checkAssassinationResult, isArmorAvailable, isWeaponAvailable, getItemCostText
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
