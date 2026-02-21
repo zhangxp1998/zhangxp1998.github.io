@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>剧本机制流程管理工具</title>
+    <title>《青楼》机制小程序</title>
     <!-- 引入 Vue 3 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- 引入 Tailwind CSS -->
@@ -15,21 +15,21 @@
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen pb-10">
-    <div id="app" v-cloak class="max-w-7xl mx-auto pt-6 px-4 space-y-6">
+    <div id="app" v-cloak class="max-w-7xl mx-auto pt-4 px-2 md:pt-6 md:px-4 space-y-4 md:space-y-6">
         
         <!-- Header -->
         <header class="bg-white shadow-md rounded-lg p-5 flex flex-col md:flex-row justify-between items-center gap-4 border-t-4 border-indigo-600">
             <div>
                 <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                    <span>📜</span> 机制流程管理大屏
+                    <span>📜</span> 《青楼》机制小程序
                 </h1>
                 <p class="text-sm text-slate-500 mt-1">记录宝藏、搜证路线、暗杀防具与结算</p>
             </div>
-            <div class="flex flex-wrap gap-2">
-                <button @click="currentTab = 'setup'" :class="{'bg-indigo-600 text-white': currentTab==='setup', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='setup'}" class="px-5 py-2 rounded-md font-medium transition-colors">⚙️ 基础设置</button>
-                <button @click="currentTab = 'treasures'" :class="{'bg-indigo-600 text-white': currentTab==='treasures', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='treasures'}" class="px-5 py-2 rounded-md font-medium transition-colors">💎 宝藏设置</button>
-                <button @click="currentTab = 'rounds'" :class="{'bg-indigo-600 text-white': currentTab==='rounds', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='rounds'}" class="px-5 py-2 rounded-md font-medium transition-colors">⚔️ 轮次面板</button>
-                <button @click="currentTab = 'dashboard'" :class="{'bg-indigo-600 text-white': currentTab==='dashboard', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='dashboard'}" class="px-5 py-2 rounded-md font-medium transition-colors">📊 状态总览</button>
+            <div class="flex flex-wrap gap-2 mt-4 md:mt-0 w-full md:w-auto justify-start">
+                <button @click="currentTab = 'setup'" :class="{'bg-indigo-600 text-white': currentTab==='setup', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='setup'}" class="flex-1 md:flex-none px-3 py-2 rounded-md font-medium transition-colors text-sm">⚙️ 设置</button>
+                <button @click="currentTab = 'treasures'" :class="{'bg-indigo-600 text-white': currentTab==='treasures', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='treasures'}" class="flex-1 md:flex-none px-3 py-2 rounded-md font-medium transition-colors text-sm">💎 宝藏</button>
+                <button @click="currentTab = 'rounds'" :class="{'bg-indigo-600 text-white': currentTab==='rounds', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='rounds'}" class="flex-1 md:flex-none px-3 py-2 rounded-md font-medium transition-colors text-sm">⚔️ 轮次</button>
+                <button @click="currentTab = 'dashboard'" :class="{'bg-indigo-600 text-white': currentTab==='dashboard', 'bg-slate-100 text-slate-700 hover:bg-slate-200': currentTab!=='dashboard'}" class="flex-1 md:flex-none px-3 py-2 rounded-md font-medium transition-colors text-sm">📊 总览</button>
             </div>
         </header>
 
@@ -123,164 +123,169 @@
                     <div v-else class="space-y-8">
                         
                         <!-- 搜证记录 -->
-                        <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-100">
+                        <div class="bg-indigo-50 p-3 md:p-5 rounded-lg border border-indigo-100">
                             <h3 class="font-bold text-lg mb-4 text-indigo-800 flex items-center gap-2">🔍 搜证阶段记录</h3>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left bg-white rounded shadow-sm">
-                                    <thead class="bg-indigo-100 text-indigo-800">
-                                        <tr>
-                                            <th class="p-3 w-1/5">角色</th>
-                                            <th class="p-3 w-1/5">物品搜索</th>
-                                            <th class="p-3 w-2/5">获得物品 (逗号分隔)</th>
-                                            <th class="p-3 w-1/5 text-center">开启宝箱所需银两</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="char in characters" :key="char.id" class="border-t" :class="{'bg-red-50': isDeadBeforeCurrentRound(char)}">
-                                            <td class="p-3 font-medium flex items-center gap-2">
-                                                <span>{{ char.name }}</span>
-                                                <span v-if="isDeadBeforeCurrentRound(char)" class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded">已死亡</span>
-                                            </td>
-                                            <td class="p-3">
-                                                <div class="space-y-2">
-                                                    <select v-model="currentRoundData.searches[char.id].location" @change="onSearchLocationChange(char.id, 1)" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
-                                                        <option value="">-- 未搜索 --</option>
-                                                        <optgroup v-for="loc in locations" :key="loc" :label="loc">
-                                                            <option :value="loc + ' - 上'">{{ loc }} - 上 ({{ getAvailableItemText(loc + ' - 上', char.id, 1) }})</option>
-                                                            <option :value="loc + ' - 下'">{{ loc }} - 下 ({{ getAvailableItemText(loc + ' - 下', char.id, 1) }})</option>
-                                                        </optgroup>
-                                                    </select>
-                                                    <select v-if="char.maxSearches > 1" v-model="currentRoundData.searches[char.id].location2" @change="onSearchLocationChange(char.id, 2)" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
-                                                        <option value="">-- 未搜索 --</option>
-                                                        <optgroup v-for="loc in locations" :key="loc" :label="loc">
-                                                            <option :value="loc + ' - 上'">{{ loc }} - 上 ({{ getAvailableItemText(loc + ' - 上', char.id, 2) }})</option>
-                                                            <option :value="loc + ' - 下'">{{ loc }} - 下 ({{ getAvailableItemText(loc + ' - 下', char.id, 2) }})</option>
-                                                        </optgroup>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="p-3">
-                                                <div class="space-y-2">
-                                                    <input v-model="currentRoundData.searches[char.id].items" :disabled="isDeadBeforeCurrentRound(char)" type="text" placeholder="例如: 毒药, 银票" class="w-full border rounded px-2 py-1 disabled:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                                    <input v-if="char.maxSearches > 1" v-model="currentRoundData.searches[char.id].items2" :disabled="isDeadBeforeCurrentRound(char)" type="text" placeholder="例如: 毒药, 银票" class="w-full border rounded px-2 py-1 disabled:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                                                </div>
-                                            </td>
-                                            <td class="p-3 text-center">
-                                                <div class="space-y-2 text-sm text-amber-600 font-bold">
-                                                    <div class="h-8 leading-8">{{ getItemCostText(currentRoundData.searches[char.id].items) }}</div>
-                                                    <div v-if="char.maxSearches > 1" class="h-8 leading-8">{{ getItemCostText(currentRoundData.searches[char.id].items2) }}</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            
+                            <!-- 移动端卡片视图 & PC端表格视图融合 -->
+                            <div class="grid grid-cols-1 gap-4">
+                                <div v-for="char in characters" :key="char.id" 
+                                     class="bg-white p-4 rounded shadow-sm border"
+                                     :class="{'bg-red-50 border-red-200': isDeadBeforeCurrentRound(char)}">
+                                     
+                                    <div class="font-bold text-lg mb-3 flex items-center gap-2 border-b pb-2">
+                                        <span>{{ char.name }}</span>
+                                        <span v-if="isDeadBeforeCurrentRound(char)" class="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded font-normal">已死亡</span>
+                                    </div>
+                                    
+                                    <!-- 搜索动作 1 -->
+                                    <div class="grid grid-cols-1 md:grid-cols-12 gap-3 mb-2 items-center">
+                                        <div class="md:col-span-4">
+                                            <label class="block text-xs text-slate-500 mb-1 md:hidden">物品搜索</label>
+                                            <select v-model="currentRoundData.searches[char.id].location" @change="onSearchLocationChange(char.id, 1)" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-2 bg-white disabled:bg-slate-100 text-sm">
+                                                <option value="">-- 未搜索 --</option>
+                                                <optgroup v-for="loc in locations" :key="loc" :label="loc">
+                                                    <option :value="loc + ' - 上'">{{ loc }} - 上 ({{ getAvailableItemText(loc + ' - 上', char.id, 1) }})</option>
+                                                    <option :value="loc + ' - 下'">{{ loc }} - 下 ({{ getAvailableItemText(loc + ' - 下', char.id, 1) }})</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div class="md:col-span-5">
+                                            <label class="block text-xs text-slate-500 mb-1 md:hidden">获得物品 (逗号分隔)</label>
+                                            <input v-model="currentRoundData.searches[char.id].items" :disabled="isDeadBeforeCurrentRound(char)" type="text" placeholder="例如: 毒药, 银票" class="w-full border rounded px-2 py-2 disabled:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-sm">
+                                        </div>
+                                        <div class="md:col-span-3 flex md:justify-center items-center gap-2">
+                                            <label class="block text-xs text-slate-500 md:hidden">所需银两:</label>
+                                            <span class="text-sm text-amber-600 font-bold">{{ getItemCostText(currentRoundData.searches[char.id].items) }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 搜索动作 2 (如果有技能) -->
+                                    <div v-if="char.maxSearches > 1" class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center border-t pt-2 mt-2 border-dashed">
+                                        <div class="md:col-span-4">
+                                            <select v-model="currentRoundData.searches[char.id].location2" @change="onSearchLocationChange(char.id, 2)" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-2 bg-white disabled:bg-slate-100 text-sm">
+                                                <option value="">-- 未搜索 (2) --</option>
+                                                <optgroup v-for="loc in locations" :key="loc" :label="loc">
+                                                    <option :value="loc + ' - 上'">{{ loc }} - 上 ({{ getAvailableItemText(loc + ' - 上', char.id, 2) }})</option>
+                                                    <option :value="loc + ' - 下'">{{ loc }} - 下 ({{ getAvailableItemText(loc + ' - 下', char.id, 2) }})</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div class="md:col-span-5">
+                                            <input v-model="currentRoundData.searches[char.id].items2" :disabled="isDeadBeforeCurrentRound(char)" type="text" placeholder="获得物品 (2)" class="w-full border rounded px-2 py-2 disabled:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 text-sm">
+                                        </div>
+                                        <div class="md:col-span-3 flex md:justify-center items-center gap-2">
+                                            <label class="block text-xs text-slate-500 md:hidden">所需银两:</label>
+                                            <span class="text-sm text-amber-600 font-bold">{{ getItemCostText(currentRoundData.searches[char.id].items2) }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             </div>
                         </div>
 
                         <!-- 暗杀与结算 -->
-                        <div class="bg-red-50 p-5 rounded-lg border border-red-100">
+                        <div class="bg-red-50 p-3 md:p-5 rounded-lg border border-red-100">
                             <h3 class="font-bold text-lg mb-4 text-red-800 flex items-center gap-2">🗡️ 暗杀与防具结算</h3>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left bg-white rounded shadow-sm mb-4">
-                                    <thead class="bg-red-100 text-red-800">
-                                        <tr>
-                                            <th class="p-3 w-1/5">行动角色</th>
-                                            <th class="p-3 w-1/5">暗杀目标</th>
-                                            <th class="p-3 w-1/5">使用武器</th>
-                                            <th class="p-3 w-1/5 text-center">目标是否使用防具?</th>
-                                            <th class="p-3 w-1/5 text-center">系统判定结果</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="char in characters" :key="char.id" class="border-t" :class="{'bg-slate-50 opacity-50': isDeadBeforeCurrentRound(char)}">
-                                            <td class="p-3 font-medium">{{ char.name }}</td>
-                                            <td class="p-3">
-                                                <div class="space-y-2">
-                                                    <select v-model="currentRoundData.assassinations[char.id].target" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
-                                                        <option value="">-- 无动作 --</option>
-                                                        <option v-for="target in characters.filter(c => c.id !== char.id)" :key="target.id" :value="target.id">
-                                                            {{ target.name }} {{ isDeadBeforeCurrentRound(target) ? '(尸体)' : '' }}
-                                                        </option>
-                                                    </select>
-                                                    <select v-if="char.maxAssassinations > 1" v-model="currentRoundData.assassinations[char.id].target2" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
-                                                        <option value="">-- 无动作 --</option>
-                                                        <option v-for="target in characters.filter(c => c.id !== char.id && c.id !== currentRoundData.assassinations[char.id].target)" :key="target.id" :value="target.id">
-                                                            {{ target.name }} {{ isDeadBeforeCurrentRound(target) ? '(尸体)' : '' }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="p-3">
-                                                <div class="space-y-2">
-                                                    <select v-model="currentRoundData.assassinations[char.id].weapon" :disabled="!currentRoundData.assassinations[char.id].target || isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
-                                                        <option value="">-- 选择武器 --</option>
-                                                        <option v-for="item in allFoundWeapons" :key="item" :value="item" :disabled="!isWeaponAvailable(item, char.id)">
-                                                            {{ item }} {{ !isWeaponAvailable(item, char.id) ? '(已被他人使用)' : '' }}
-                                                        </option>
-                                                    </select>
-                                                    <select v-if="char.maxAssassinations > 1" v-model="currentRoundData.assassinations[char.id].weapon2" :disabled="!currentRoundData.assassinations[char.id].target2 || isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-1 bg-white disabled:bg-slate-100">
-                                                        <option value="">-- 选择武器 --</option>
-                                                        <option v-for="item in allFoundWeapons" :key="item" :value="item" :disabled="!isWeaponAvailable(item, char.id)">
-                                                            {{ item }} {{ !isWeaponAvailable(item, char.id) ? '(已被他人使用)' : '' }}
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class="p-3 text-center">
-                                                <div class="space-y-2 flex flex-col items-center">
-                                                    <select v-if="currentRoundData.assassinations[char.id].target" v-model="currentRoundData.assassinations[char.id].targetArmor" class="w-full border rounded px-2 py-1 bg-white h-7 text-sm">
-                                                        <option value="">-- 无防具 --</option>
-                                                        <optgroup label="免死防具">
-                                                            <option v-for="armor in allFoundArmors.lifeSaving" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 1)">
-                                                                {{ armor }} {{ !isArmorAvailable(armor, char.id, 1) ? '(已被用掉)' : '' }}
-                                                            </option>
-                                                        </optgroup>
-                                                        <optgroup label="防伤防具">
-                                                            <option v-for="armor in allFoundArmors.damagePreventing" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 1)">
-                                                                {{ armor }} {{ !isArmorAvailable(armor, char.id, 1) ? '(已被用掉)' : '' }}
-                                                            </option>
-                                                        </optgroup>
-                                                    </select>
-                                                    <span v-else class="text-slate-400 text-sm block h-7 leading-7">-</span>
-                                                    
-                                                    <template v-if="char.maxAssassinations > 1">
-                                                        <select v-if="currentRoundData.assassinations[char.id].target2" v-model="currentRoundData.assassinations[char.id].target2Armor" class="w-full border rounded px-2 py-1 bg-white h-7 mt-2 text-sm">
-                                                            <option value="">-- 无防具 --</option>
-                                                            <optgroup label="免死防具">
-                                                                <option v-for="armor in allFoundArmors.lifeSaving" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 2)">
-                                                                    {{ armor }} {{ !isArmorAvailable(armor, char.id, 2) ? '(已被用掉)' : '' }}
-                                                                </option>
-                                                            </optgroup>
-                                                            <optgroup label="防伤防具">
-                                                                <option v-for="armor in allFoundArmors.damagePreventing" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 2)">
-                                                                    {{ armor }} {{ !isArmorAvailable(armor, char.id, 2) ? '(已被用掉)' : '' }}
-                                                                </option>
-                                                            </optgroup>
-                                                        </select>
-                                                        <span v-else class="text-slate-400 text-sm block h-7 mt-2 leading-7">-</span>
-                                                    </template>
-                                                </div>
-                                            </td>
-                                            <td class="p-3 text-center">
-                                                <div class="space-y-2">
-                                                    <span v-if="currentRoundData.assassinations[char.id].target && currentRoundData.assassinations[char.id].weapon" class="block h-7 leading-7">
-                                                        <span v-if="!checkAssassinationResult(currentRoundData.assassinations[char.id].weapon, currentRoundData.assassinations[char.id].targetArmor)" class="text-blue-600 font-bold text-sm">🛡️ 防御</span>
-                                                        <span v-else class="text-red-600 font-bold text-sm">💀 击杀</span>
-                                                    </span>
-                                                    <span v-else class="block h-7"></span>
+                            
+                            <!-- 移动端卡片视图 & PC端表格视图融合 -->
+                            <div class="grid grid-cols-1 gap-4 mb-4">
+                                <div v-for="char in characters" :key="char.id" 
+                                     class="bg-white p-4 rounded shadow-sm border"
+                                     :class="{'bg-slate-50 opacity-60': isDeadBeforeCurrentRound(char)}">
+                                     
+                                    <div class="font-bold text-lg mb-3 border-b pb-2 text-slate-800">{{ char.name }} <span class="text-xs font-normal text-slate-500 ml-2">行动阶段</span></div>
 
-                                                    <template v-if="char.maxAssassinations > 1">
-                                                        <span v-if="currentRoundData.assassinations[char.id].target2 && currentRoundData.assassinations[char.id].weapon2" class="block h-7 mt-2 leading-7">
-                                                            <span v-if="!checkAssassinationResult(currentRoundData.assassinations[char.id].weapon2, currentRoundData.assassinations[char.id].target2Armor)" class="text-blue-600 font-bold text-sm">🛡️ 防御</span>
-                                                            <span v-else class="text-red-600 font-bold text-sm">💀 击杀</span>
-                                                        </span>
-                                                        <span v-else class="block h-7 mt-2"></span>
-                                                    </template>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <!-- 暗杀动作 1 -->
+                                    <div class="grid grid-cols-2 md:grid-cols-12 gap-3 items-end">
+                                        <div class="col-span-2 md:col-span-3">
+                                            <label class="block text-xs text-slate-500 mb-1">暗杀目标</label>
+                                            <select v-model="currentRoundData.assassinations[char.id].target" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-2 bg-white disabled:bg-slate-100 text-sm">
+                                                <option value="">-- 无动作 --</option>
+                                                <option v-for="target in characters.filter(c => c.id !== char.id)" :key="target.id" :value="target.id">
+                                                    {{ target.name }} {{ isDeadBeforeCurrentRound(target) ? '(尸体)' : '' }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-span-2 md:col-span-3">
+                                            <label class="block text-xs text-slate-500 mb-1">使用武器</label>
+                                            <select v-model="currentRoundData.assassinations[char.id].weapon" :disabled="!currentRoundData.assassinations[char.id].target || isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-2 bg-white disabled:bg-slate-100 text-sm">
+                                                <option value="">-- 选择武器 --</option>
+                                                <option v-for="item in allFoundWeapons" :key="item" :value="item" :disabled="!isWeaponAvailable(item, char.id)">
+                                                    {{ item }} {{ !isWeaponAvailable(item, char.id) ? '(已被他人使用)' : '' }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-span-1 md:col-span-3">
+                                            <label class="block text-xs text-slate-500 mb-1">目标防具</label>
+                                            <select v-if="currentRoundData.assassinations[char.id].target" v-model="currentRoundData.assassinations[char.id].targetArmor" class="w-full border rounded px-1 py-2 bg-white text-sm">
+                                                <option value="">-- 无防具 --</option>
+                                                <optgroup label="免死防具">
+                                                    <option v-for="armor in allFoundArmors.lifeSaving" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 1)">
+                                                        {{ armor }} {{ !isArmorAvailable(armor, char.id, 1) ? '(已用)' : '' }}
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="防伤防具">
+                                                    <option v-for="armor in allFoundArmors.damagePreventing" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 1)">
+                                                        {{ armor }} {{ !isArmorAvailable(armor, char.id, 1) ? '(已用)' : '' }}
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+                                            <div v-else class="h-9 flex items-center text-slate-400 text-sm px-2">-</div>
+                                        </div>
+                                        <div class="col-span-1 md:col-span-3 flex justify-end md:justify-center items-center h-9">
+                                            <span v-if="currentRoundData.assassinations[char.id].target && currentRoundData.assassinations[char.id].weapon">
+                                                <span v-if="!checkAssassinationResult(currentRoundData.assassinations[char.id].weapon, currentRoundData.assassinations[char.id].targetArmor)" class="text-blue-600 font-bold bg-blue-50 px-3 py-1 rounded">🛡️ 防御</span>
+                                                <span v-else class="text-red-600 font-bold bg-red-50 px-3 py-1 rounded">💀 击杀</span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 暗杀动作 2 (如果有技能) -->
+                                    <div v-if="char.maxAssassinations > 1" class="grid grid-cols-2 md:grid-cols-12 gap-3 items-end border-t border-dashed mt-4 pt-4">
+                                        <div class="col-span-2 md:col-span-3">
+                                            <label class="block text-xs text-slate-500 mb-1">暗杀目标 (2)</label>
+                                            <select v-model="currentRoundData.assassinations[char.id].target2" :disabled="isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-2 bg-white disabled:bg-slate-100 text-sm">
+                                                <option value="">-- 无动作 --</option>
+                                                <option v-for="target in characters.filter(c => c.id !== char.id && c.id !== currentRoundData.assassinations[char.id].target)" :key="target.id" :value="target.id">
+                                                    {{ target.name }} {{ isDeadBeforeCurrentRound(target) ? '(尸体)' : '' }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-span-2 md:col-span-3">
+                                            <label class="block text-xs text-slate-500 mb-1">使用武器 (2)</label>
+                                            <select v-model="currentRoundData.assassinations[char.id].weapon2" :disabled="!currentRoundData.assassinations[char.id].target2 || isDeadBeforeCurrentRound(char)" class="w-full border rounded px-2 py-2 bg-white disabled:bg-slate-100 text-sm">
+                                                <option value="">-- 选择武器 --</option>
+                                                <option v-for="item in allFoundWeapons" :key="item" :value="item" :disabled="!isWeaponAvailable(item, char.id)">
+                                                    {{ item }} {{ !isWeaponAvailable(item, char.id) ? '(已被他人使用)' : '' }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-span-1 md:col-span-3">
+                                            <label class="block text-xs text-slate-500 mb-1">目标防具 (2)</label>
+                                            <select v-if="currentRoundData.assassinations[char.id].target2" v-model="currentRoundData.assassinations[char.id].target2Armor" class="w-full border rounded px-1 py-2 bg-white text-sm">
+                                                <option value="">-- 无防具 --</option>
+                                                <optgroup label="免死防具">
+                                                    <option v-for="armor in allFoundArmors.lifeSaving" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 2)">
+                                                        {{ armor }} {{ !isArmorAvailable(armor, char.id, 2) ? '(已用)' : '' }}
+                                                    </option>
+                                                </optgroup>
+                                                <optgroup label="防伤防具">
+                                                    <option v-for="armor in allFoundArmors.damagePreventing" :key="armor" :value="armor" :disabled="!isArmorAvailable(armor, char.id, 2)">
+                                                        {{ armor }} {{ !isArmorAvailable(armor, char.id, 2) ? '(已用)' : '' }}
+                                                    </option>
+                                                </optgroup>
+                                            </select>
+                                            <div v-else class="h-9 flex items-center text-slate-400 text-sm px-2">-</div>
+                                        </div>
+                                        <div class="col-span-1 md:col-span-3 flex justify-end md:justify-center items-center h-9">
+                                            <span v-if="currentRoundData.assassinations[char.id].target2 && currentRoundData.assassinations[char.id].weapon2">
+                                                <span v-if="!checkAssassinationResult(currentRoundData.assassinations[char.id].weapon2, currentRoundData.assassinations[char.id].target2Armor)" class="text-blue-600 font-bold bg-blue-50 px-3 py-1 rounded">🛡️ 防御</span>
+                                                <span v-else class="text-red-600 font-bold bg-red-50 px-3 py-1 rounded">💀 击杀</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             </div>
                             
                             <p class="text-right text-xs text-red-500 mt-2">* 所有暗杀行为与防具判定均会实时自动结算，无需手动点击。</p>
