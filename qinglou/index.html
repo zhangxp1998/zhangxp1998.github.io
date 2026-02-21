@@ -649,23 +649,17 @@
                     
                     for (let r of rounds.value) {
                         for (let c of characters.value) {
-                            // 同一个动作自己选中的当然可用，不要被自己禁用
-                            if (r.id === currentRoundNumber.value && c.id === checkCharId) {
-                                if (checkActionIndex === 1 && r.assassinations[c.id]?.targetArmor === armorName) return true;
-                                if (checkActionIndex === 2 && r.assassinations[c.id]?.target2Armor === armorName) return true;
-                                // 但是如果第二动作正在查，且第一动作已经选了它，则不可用
-                                if (checkActionIndex === 2 && r.assassinations[c.id]?.targetArmor === armorName) return false;
-                                break; // 之后的不用查了
+                            if (r.assassinations[c.id]?.targetArmor === armorName) {
+                                // 如果是正在检查的这个下拉框持有的，则可用
+                                if (r.id === currentRoundNumber.value && c.id === checkCharId && checkActionIndex === 1) return true;
+                                return false;
                             }
-                            
-                            if (r.assassinations[c.id]?.targetArmor === armorName) return false;
-                            if (r.assassinations[c.id]?.target2Armor === armorName) return false;
-                            
-                            if (r.id === currentRoundNumber.value && c.id === checkCharId) {
-                                break;
+                            if (r.assassinations[c.id]?.target2Armor === armorName) {
+                                // 如果是正在检查的这个下拉框持有的，则可用
+                                if (r.id === currentRoundNumber.value && c.id === checkCharId && checkActionIndex === 2) return true;
+                                return false;
                             }
                         }
-                        if (r.id === currentRoundNumber.value) break;
                     }
                     return true;
                 };
